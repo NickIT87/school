@@ -1,17 +1,16 @@
 from math import pow, sqrt
 
 
-# управляющая переменная цикла
-cycle = True
-
 print("Введите коэффициенты: \n")
 # цикл ввода коэффициентов 
-while cycle:
+while True:
     try:
         a = float(input("a: "))
+        if a == 0:
+            raise exception
         b = float(input("b: "))
         c = float(input("c: "))
-        cycle = False
+        break
     except:
         print("Ошибка ввода, введите число!")
 
