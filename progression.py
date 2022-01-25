@@ -17,4 +17,25 @@ def arithmetic_progression(a0, d, n):
     return a0 + n * d
 
 #print(arithmetic_progression(12, 123, 10))
-print(arithmetic_progression(0, 1, 10))
+#print(arithmetic_progression(0, 1, 10))
+
+def factorial(n):
+    if n == 1:
+        return n
+    elif n < 1:
+        return None
+    else:
+        return n*factorial(n-1)
+
+#print(factorial(4))
+
+
+def geometry_progression(a0, r, n):
+    Sn = 0
+    for j in range(n+1):
+        print(a0 * r ** j)
+        Sn += a0 * r ** j
+    print("Sn: {}".format(Sn))
+    return (a0 - ((a0 * r ** n) * r)) / (1 - r)
+
+print("Snr: {}".format(geometry_progression(1, 2, 4)))
