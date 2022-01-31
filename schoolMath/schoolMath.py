@@ -1,4 +1,5 @@
 from numbers import Number
+from math import pow
 
 
 def arithmetic_progression(a0:Number, d:Number, n:int, debug:bool=False):
@@ -42,4 +43,31 @@ def geometry_progression(a0:Number, r:Number, n:int, debug:bool=False):
             g_prog.append(a0 * r ** j)
         return g_prog
     return a0 * r ** n  # geometry progression formula
+
+
+def factorial(n: int):
+    if n <= 1:
+        return 1
+    else:
+        return n*factorial(n-1)
+
+
+def C(j, n):
+    nf = factorial(n)
+    jf = factorial(j)
+    njf = factorial(n - j)
+    return int(nf / (jf * njf))
+
+
+def binom_n(a, b, n):
+    ansv = []
+    for j in range(0, n+1):
+        #print(C(j, n) * (a**(n-j)) * (b**j))
+        ansv.append((C(j, n) * pow(a, n-j) * pow(b, j)))
+    return ansv
+
+
+print(factorial(-3))
+print("(a+b)**n: {}".format(pow(2+2, 6)))
+print(binom_n(2, 2, 6))
 
