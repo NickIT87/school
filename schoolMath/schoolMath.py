@@ -56,18 +56,18 @@ def C(j, n):
     nf = factorial(n)
     jf = factorial(j)
     njf = factorial(n - j)
-    return int(nf / (jf * njf))
+    return nf / (jf * njf)
 
 
 def binom_n(a, b, n):
     ansv = []
     for j in range(0, n+1):
-        #print(C(j, n) * (a**(n-j)) * (b**j))
+        print(C(j, n) * a**(n-j) * b**j)
         ansv.append((C(j, n) * pow(a, n-j) * pow(b, j)))
     return ansv
 
 
-print(factorial(-3))
+print(factorial(3))
 print("(a+b)**n: {}".format(pow(2+2, 6)))
 print(binom_n(2, 2, 6))
 
