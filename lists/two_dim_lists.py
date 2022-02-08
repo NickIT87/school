@@ -89,3 +89,37 @@
 
 # print(A.dot(B))         # умножение
 # print(A + B)            # сложение
+
+
+m1 = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+]
+
+m2 = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0]
+]
+
+def m_diag_ones(m):
+    for i in range(len(m)):
+        m[i][i] = 1
+
+def rev_diag_ones(m):
+    cnt = len(m) - 1
+    for i in range(len(m)):
+        m[i][cnt] = 1
+        cnt -= 1
+
+m_diag_ones(m1)
+rev_diag_ones(m2)
+
+print("m1: \n")
+for i in m1:
+    print(i)
+print("\n")
+print("m2: \n")
+for i in m2:
+    print(i)
