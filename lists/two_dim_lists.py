@@ -115,6 +115,28 @@ def rev_diag_ones(m):
 main_diag_fill_ones(m1)
 rev_diag_ones(m2)
 
+
+def main_diag_sum(m):
+    cnt = 0
+    s = 0
+    for i in m:
+        s += i[cnt]
+        cnt += 1
+    print("SUM: ", s)
+
+
+def reverse_diag_sum(m):
+    cnt = len(m) - 1
+    s = 0
+    for i in m:
+        s += i[cnt]
+        cnt -= 1
+    print("REV SUM: ", s)
+
+
+main_diag_sum(m1)
+reverse_diag_sum(m2)
+
 # formated output
 print("m1: \n")
 for i in m1:
