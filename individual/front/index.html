@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Hello</h1>
+    <button id="btn1" class="knopka">
+        test1
+    </button>
+    <button id="btn2" class="knopka" name="first">
+        test2
+    </button>
+
+    <script>
+        
+        let red = function() {
+            console.log($(this).text());
+            $('h1').css("color", "red")
+            $('h1').show()
+        }
+        let black = function() {
+            console.log($(this).text());
+            $('h1').css("color", '#000000')
+            $('h1').hide()
+        }
+
+        let handle_in = function() {
+            $('h1').css("color", 'blue')
+        }
+
+        let handle_out = function() {
+            $('h1').css("color", 'black')
+        }
+
+        $('h1').hover(handle_in, handle_out)
+        $('#btn1').on('click', red)
+        $("button[name='first']").on('click', black);
+        
+
+
+    </script>
+</body>
+</html>
