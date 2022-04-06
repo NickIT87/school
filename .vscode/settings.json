@@ -1,3 +1,6 @@
 {
-    "terminal.integrated.fontSize": 22
+    "editor.fontFamily": "'Terminus \\(TTF\\)'",
+    "editor.fontSize": 22,
+    "editor.fontLigatures": null,
+    "terminal.integrated.fontSize": 16
 }
