@@ -24,7 +24,8 @@ class Search(ListView):
     context_object_name = 'found_obj'
 
     def get_queryset(self):
-        pass
+        s = self.request.GET.get('s')
+        return Eleventh.objects.filter(name__icontains=s)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)

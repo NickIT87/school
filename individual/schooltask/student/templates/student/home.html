@@ -26,10 +26,10 @@
     <br>
     <div class="row">
         {% comment %}<form action="{% url 'search' %}" method="get"></form> {% endcomment %}
-        <form>
+        <form action="{% url 'search' %}" method="get">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Search by Name</label>
-                <input type="input" class="form-control" id="InputName" aria-describedby="student">
+                <input type="input" class="form-control" id="InputName" name="s" aria-describedby="student">
                 <div id="inputHelp" class="form-text">Enter the Student Name!</div>
             </div>
 
