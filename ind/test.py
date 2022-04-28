@@ -7,21 +7,28 @@ from numpy import number
 print(sqrt(4)) # вычисление квадратного корня числа
 
 
-v_string: str = "hello"     # строка
-v_integer: int = 12              # целое число
-v_float: float = 14.7       # число с плавающей точкой 
-v_bool: bool = False         # Булевы типы
+v_string: str = "hello"                 # строка
+v_integer: int = 12                     # целое число
+v_float: float = 14.7                   # число с плавающей точкой 
+v_bool: bool = False                    # Булевы типы
 # 1 = True  0 = False
-v_list: list = ["1", 2, 3.6, True]    # список - изменяемый тип данных
-v_tuple: tuple = (1, 2, 3, 4)       # кортеж - константа (не изменяемый тип данных)
-v_set: set = {1, 2, 3, 4}           # множества элементов
+v_list: list = ["1", 2, 3.6, True]      # список - изменяемый тип данных
+a = v_list[:2]                          # срез списка
+v_tuple: tuple = (1, 2, 3, 4)           # кортеж - константа (не изменяемый тип данных)
+v_set: set = {1, 2, 3, 4}               # множества элементов
+b = set('Hello')                        # создание неупорядоченного множества
 v_dict: dict = {
     "Age": 12,
     "Name": "Arina",
     "Class": "5a"
-}   
+}
 v_none = None
-
+# двумерный список
+two_dimensional_list: list = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
 
 # Тема ООП - объектно ориентированное программирование
 class Student:
@@ -106,3 +113,11 @@ def abs(number: int) -> number:
 
 
 print(abs(-123)) # простейшая функция которая возвращает модуль числа
+
+
+#алгоритм сортировки
+
+unsorted_list = [3, 5, 7, 1, 2, 45, 12, 54]
+unsorted_list.sort()
+unsorted_list.reverse()
+print(unsorted_list)

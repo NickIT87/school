@@ -6,8 +6,14 @@
 
 {% block content %}
 
-<h1>SEARCH</h1>
+<div class="container" name="search_result">
+    <h1>SEARCH</h1>
+    <h2>{{ found_obj }}</h2>
 
-<h2>{{ found_obj }}</h2>
+    {% for student in found_obj %}
+    <h3> {{ student.name }}</h3>
+    <h3> {{ student.phone }}</h3>
+    {% endfor %}
+</div>
 
 {% endblock %}

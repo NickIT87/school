@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from django.shortcuts import render
+#from django.shortcuts import render
 
 from .models import Eleventh
 
@@ -20,6 +20,7 @@ class HomePageView(ListView):
 
 
 class Search(ListView):
+    model = Eleventh
     template_name = 'student/searchResult.html'
     context_object_name = 'found_obj'
 

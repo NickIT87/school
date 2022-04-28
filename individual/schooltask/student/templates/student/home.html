@@ -36,6 +36,18 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+    <br>
+    <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        {% for student in students %}
+        <option id='{{ student.id }}' value="{{ student.name }}">{{ student.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
 </div>
+
+<script>
+    console.log($("select").val());
+</script>
 
 {% endblock %}

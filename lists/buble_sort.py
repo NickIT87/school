@@ -7,6 +7,7 @@ def bubble_sort(m):
         trigger = False
         for i in range(len(m)-1):
             if m[i] > m[i+1]:
+                # swap
                 m[i], m[i+1] = m[i+1], m[i]
                 trigger = True
 
