@@ -50,6 +50,13 @@ print(s2.say())         # вызов приветствия у студента 
 print(v_list[1], len(v_list))
 print(v_dict["Name"])
 
+# type()
+# str()
+# int()
+# float()
+# dir()
+# help()
+# len()
 
 # проверка типа данных
 print(len(v_list))      # проверка длины списка

@@ -4,6 +4,11 @@ from telegram.ext import Updater, CommandHandler
 from telegram.ext import MessageHandler, Filters, InlineQueryHandler
 import time
 
+# selenium 4
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 TOKEN = ''
 updater = Updater(token=TOKEN)
@@ -21,6 +26,11 @@ def echo(update, context):
         text = time.time()
     context.bot.send_message(chat_id=update.effective_chat.id, 
                              text=text)    
+
+def search(update, context):
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    driver.get("https://google.com")
+    time.sleep(2)
 
 # функция обработки команды '/caps'
 def caps(update, context):
@@ -61,6 +71,10 @@ dispatcher.add_handler(start_handler)
 # обработчик текстовых сообщений
 echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
 dispatcher.add_handler(echo_handler)
+
+# search
+search_handler = CommandHandler('search', search)
+dispatcher.add_handler(search_handler)
 
 # обработчик команды '/caps'
 caps_handler = CommandHandler('caps', caps)
