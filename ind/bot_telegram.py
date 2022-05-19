@@ -30,7 +30,9 @@ def echo(update, context):
 def search(update, context):
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
     driver.get("https://google.com")
-    time.sleep(2)
+    search_field = driver.find_element_by_name('q')
+    search_field.send_keys("акинатор")
+    time.sleep(4)
 
 # функция обработки команды '/caps'
 def caps(update, context):
