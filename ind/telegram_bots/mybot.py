@@ -13,7 +13,15 @@ MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
 
 @MypyBot.message_handler(commands=['start'])
 def start_message(message):
-    MypyBot.send_message(message.chat.id,"Привет ✌️ ")
+    MypyBot.send_message(
+        message.chat.id,
+        """
+            Привет ✌️, я персональный бот Арины!
+            у меня есть команды:
+            /links 
+            /pizza_menu
+        """
+    )
 
 
 @MypyBot.message_handler(commands=['button'])

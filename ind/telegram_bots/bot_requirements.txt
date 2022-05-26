@@ -1,0 +1,23 @@
+
+/start
+    /links
+    /pizza_menu
+
+
+1. /links (btn link)
+    https://ru.akinator.com/
+    https://youtube.com
+    https://github.com/medvedarina12/My_bot_arina
+
+2. /pizza_menu (btn reply)
+    Какую пиццу вы предпочитаете? 
+    -пепперони              = Хороший выбор
+    -грибная                = ммм вкусненько
+    -маргарита              = а эту я не люблю
+    -с ананасами            = Необычно
+    -рейнджер               = любишь остренькое ? 
+    -морская                = Гурман ?
+
+3. replyer dialog
+    -да -нет
+
