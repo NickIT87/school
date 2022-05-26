@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-TOKEN = ''
+TOKEN = '5339717364:AAEZ-fPgVQ8pKxEzVgDYxowGH5pvIyLKKKM'
 updater = Updater(token=TOKEN)
 dispatcher = updater.dispatcher
 
