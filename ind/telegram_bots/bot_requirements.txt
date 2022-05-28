@@ -21,3 +21,18 @@
 3. replyer dialog
     -да -нет
 
+
+
+4. /dialog
+    dialog_checker = True
+    dialog_counter = 0          == number of questions / ansvers
+
+    Question 1:
+        answer q1_1
+        answer q1_2
+    Question 2:
+        answer q2_1
+        answer q2_2
+
+    while dialog cheker:
+        

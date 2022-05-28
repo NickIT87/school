@@ -56,8 +56,50 @@ def button_pmenu(message):
     MypyBot.send_message(message.chat.id,'Какую пиццу предпочитаете?',reply_markup=markup)
 
 
+d_checker = False
+d_cnt = 0
+ 
+
+def dialogQ1(msg):
+    markup = types.ReplyKeyboardMarkup()
+    item1=types.KeyboardButton("answer Q1_1")
+    item2=types.KeyboardButton("answer Q1_2")
+    markup.add(item1, item2)
+    MypyBot.send_message(msg.chat.id,'Question 1',reply_markup=markup)
+
+
+def dialogQ2(msg):
+    markup = types.ReplyKeyboardMarkup()
+    item1=types.KeyboardButton("answer Q2_1")
+    item2=types.KeyboardButton("answer Q2_2")
+    markup.add(item1, item2)
+    MypyBot.send_message(msg.chat.id,'Question 2',reply_markup=markup)
+
+
+@MypyBot.message_handler(commands=['dialog'])
+def dialog(message):
+    global d_checker
+    global d_cnt
+    d_checker = True
+    d_cnt += 1
+    dialogQ1(message)
+
+
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
+    global d_checker
+    global d_cnt
+
+    if d_checker:
+        if d_cnt == 1:
+            dialogQ2(message)
+            d_cnt += 1
+        elif d_cnt == 2:
+            d_checker = False
+            d_cnt = 0
+        else:
+            pass
+
     match message.text:
         case "Pepperoni": 
             MypyBot.reply_to(message, "Хороший выбор")
@@ -71,14 +113,13 @@ def replyer(message):
             MypyBot.reply_to(message, "любишь остренькое?")
         case "Maritime":
             MypyBot.reply_to(message, "Гурман?")
+        case "😂":
+            MypyBot.reply_to(message, "Эй не молчи!")
+        case "АЛЕ!":
+            MypyBot.reply_to(message, "НЕ ОРИ!")
+        case _:
+            if d_checker == False:
+                MypyBot.reply_to(message, message.text)    
     
-    if message.text == '😂':
-        MypyBot.reply_to(message, "Эй не молчи!")
-    elif message.text == 'АЛЕ!':
-        MypyBot.reply_to(message, "НЕ ОРИ!")
-    else:
-        print(message.text)
-        MypyBot.reply_to(message, message.text)
-
 
 MypyBot.polling()
