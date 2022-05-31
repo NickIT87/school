@@ -27,7 +27,8 @@ def start_message(message):
             /links 
             /pizza_menu
             /dialog
-        """
+        """,
+        reply_markup=types.ReplyKeyboardRemove()
     )
 
 
@@ -128,7 +129,7 @@ def replyer(message):
         else:
             d_checker = False
             d_cnt = 0
-        
+
 
     match message.text:
         case "Pepperoni": 
@@ -150,6 +151,6 @@ def replyer(message):
         case _:
             if d_checker == False and d_cnt == 0:
                 start_message(message)
-    
+
 
 MypyBot.polling()
