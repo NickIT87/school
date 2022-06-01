@@ -1,6 +1,9 @@
 import telebot                  # pip install pyTelegramBotAPI
 from telebot import types
 import sqlite3
+from qbase import q_base
+import time
+import datetime
 
 
 with open(
@@ -65,22 +68,26 @@ def button_pmenu(message):
 
 
 def dialogQ1(msg):
-    q = 'Question 1'
+    q = q_base['q1']['text']
     markup = types.ReplyKeyboardMarkup()
-    item1=types.KeyboardButton("answer Q1_1")
-    item2=types.KeyboardButton("answer Q1_2")
-    markup.add(item1, item2)
+    item1=types.KeyboardButton(q_base['q1']['a1']['text'])
+    item2=types.KeyboardButton(q_base['q1']['a2']['text'])
+    item3=types.KeyboardButton(q_base['q1']['a3']['text'])
+    item4=types.KeyboardButton(q_base['q1']['a4']['text'])
+    markup.add(item1, item2, item3, item4)
     MypyBot.send_message(msg.chat.id, q, reply_markup=markup)
-    return q
+    #return q
 
 def dialogQ2(msg):
-    q = 'Question 2'
+    q = q_base['q2']['text']
     markup = types.ReplyKeyboardMarkup()
-    item1=types.KeyboardButton("answer Q2_1")
-    item2=types.KeyboardButton("answer Q2_2")
-    markup.add(item1, item2)
+    item1=types.KeyboardButton(q_base['q2']['a1']['text'])
+    item2=types.KeyboardButton(q_base['q2']['a2']['text'])
+    item3=types.KeyboardButton(q_base['q2']['a3']['text'])
+    item4=types.KeyboardButton(q_base['q2']['a4']['text'])
+    markup.add(item1, item2, item3, item4)
     MypyBot.send_message(msg.chat.id,q,reply_markup=markup)
-    return q
+    #return q
 
 
 @MypyBot.message_handler(commands=['dialog'])
@@ -94,22 +101,21 @@ def dialog(message):
 
 
 def save_data(message):
-    print(message.text)
+    # print(message.text)
     # print(message.from_user.first_name, message.from_user.last_name)
-    # u_name = message.from_user.first_name + '_' + message.from_user.last_name
     # print(
-    #     f'CREATE TABLE IF NOT EXISTS {u_name}(question TEXT, answer TEXT, datestamp TEXT)'
+    #     f'CREATE TABLE IF NOT EXISTS {u_name}(ansver TEXT, datestamp TEXT)'
     # )
-    # question
-    # answer
-    # datetamp
-    # connection = sqlite3.connect('a_bot.db')
-    # c.execute(f'CREATE TABLE IF NOT EXISTS {u_name}(question TEXT, answer TEXT, datestamp TEXT)')
-
-    # c.execute(f"INSERT INTO {u_name} VALUES(1234, '2016-01-01', 'Python', 5)")
-    # connection.commit()
-    # c.close()
-    # connection.close()
+    u_name = message.from_user.first_name + '_' + message.from_user.last_name
+    connection = sqlite3.connect('a_bot.db')
+    c = connection.cursor()
+    c.execute(f'CREATE TABLE IF NOT EXISTS {u_name}(ansver TEXT, datestamp TEXT)')
+    unix = time.time()
+    date = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
+    c.execute(f"INSERT INTO {u_name} (ansver, datestamp) VALUES (?, ?)", (message.text, date))
+    connection.commit()
+    c.close()
+    connection.close()
 
 
 
@@ -117,9 +123,9 @@ def save_data(message):
 def replyer(message):
     global d_checker
     global d_cnt
-
+    
     if d_checker:
-        save_data(message)
+        save_data(message)          # сохранение ответов
         if d_cnt == 1:
             dialogQ1(message)
             d_cnt += 1
