@@ -67,27 +67,18 @@ def button_pmenu(message):
     MypyBot.send_message(message.chat.id,'Какую пиццу предпочитаете?',reply_markup=markup)
 
 
-def dialogQ1(msg):
-    q = q_base['q1']['text']
+def dialogQuestion(msg):
+    global d_cnt
+    m = []
+    scnt = 'q' + str(d_cnt)
+    q = q_base[scnt]['text']
     markup = types.ReplyKeyboardMarkup()
-    item1=types.KeyboardButton(q_base['q1']['a1']['text'])
-    item2=types.KeyboardButton(q_base['q1']['a2']['text'])
-    item3=types.KeyboardButton(q_base['q1']['a3']['text'])
-    item4=types.KeyboardButton(q_base['q1']['a4']['text'])
-    markup.add(item1, item2, item3, item4)
+    for i in range(1, len(q_base[scnt])):
+        item = types.KeyboardButton(q_base[scnt][str(i)]['text'])
+        m.append(item)
+    for i in m:
+        markup.add(i)
     MypyBot.send_message(msg.chat.id, q, reply_markup=markup)
-    #return q
-
-def dialogQ2(msg):
-    q = q_base['q2']['text']
-    markup = types.ReplyKeyboardMarkup()
-    item1=types.KeyboardButton(q_base['q2']['a1']['text'])
-    item2=types.KeyboardButton(q_base['q2']['a2']['text'])
-    item3=types.KeyboardButton(q_base['q2']['a3']['text'])
-    item4=types.KeyboardButton(q_base['q2']['a4']['text'])
-    markup.add(item1, item2, item3, item4)
-    MypyBot.send_message(msg.chat.id,q,reply_markup=markup)
-    #return q
 
 
 @MypyBot.message_handler(commands=['dialog'])
@@ -101,11 +92,6 @@ def dialog(message):
 
 
 def save_data(message):
-    # print(message.text)
-    # print(message.from_user.first_name, message.from_user.last_name)
-    # print(
-    #     f'CREATE TABLE IF NOT EXISTS {u_name}(ansver TEXT, datestamp TEXT)'
-    # )
     u_name = message.from_user.first_name + '_' + message.from_user.last_name
     connection = sqlite3.connect('a_bot.db')
     c = connection.cursor()
@@ -118,7 +104,6 @@ def save_data(message):
     connection.close()
 
 
-
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
     global d_checker
@@ -126,16 +111,12 @@ def replyer(message):
     
     if d_checker:
         save_data(message)          # сохранение ответов
-        if d_cnt == 1:
-            dialogQ1(message)
-            d_cnt += 1
-        elif d_cnt == 2:
-            dialogQ2(message)
+        if d_cnt <= len(q_base):
+            dialogQuestion(message)
             d_cnt += 1
         else:
             d_checker = False
             d_cnt = 0
-
 
     match message.text:
         case "Pepperoni": 
