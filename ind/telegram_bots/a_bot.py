@@ -1,9 +1,10 @@
 import telebot                  # pip install pyTelegramBotAPI
 from telebot import types
 import sqlite3
-from qbase import q_base
 import time
 import datetime
+
+from qbase import q_base
 
 
 with open(
@@ -14,10 +15,7 @@ with open(
 
 MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
 
-
-#users = []
-d_checker = False
-d_cnt = 0
+users = dict()
 
 
 @MypyBot.message_handler(commands=['start'])
@@ -30,9 +28,19 @@ def start_message(message):
             /links 
             /pizza_menu
             /dialog
+            /users
         """,
         reply_markup=types.ReplyKeyboardRemove()
     )
+
+
+@MypyBot.message_handler(commands=['users'])
+def show_users(message):
+    global users
+    if not users:
+        MypyBot.send_message(message.chat.id, 'no one')
+    else:
+        MypyBot.send_message(message.chat.id, users)
 
 
 @MypyBot.message_handler(commands=['links'])
@@ -68,9 +76,9 @@ def button_pmenu(message):
 
 
 def dialogQuestion(msg):
-    global d_cnt
+    global users
     m = []
-    scnt = 'q' + str(d_cnt)
+    scnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])
     q = q_base[scnt]['text']
     markup = types.ReplyKeyboardMarkup()
     for i in range(1, len(q_base[scnt])):
@@ -83,10 +91,14 @@ def dialogQuestion(msg):
 
 @MypyBot.message_handler(commands=['dialog'])
 def dialog(message):
-    global d_checker
-    global d_cnt
-    d_checker = True
-    d_cnt += 1
+    global users
+    if str(message.chat.id) not in users:
+        users[str(message.chat.id)] = {
+            'd_checker': False,
+            'd_cnt': 0 
+        }
+    users[str(message.chat.id)]['d_checker'] = True
+    users[str(message.chat.id)]['d_cnt'] += 1
     MypyBot.send_message(message.chat.id,'Начало диалога')
     replyer(message)
 
@@ -106,17 +118,17 @@ def save_data(message):
 
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
-    global d_checker
-    global d_cnt
-    
-    if d_checker:
-        save_data(message)          # сохранение ответов
-        if d_cnt <= len(q_base):
-            dialogQuestion(message)
-            d_cnt += 1
-        else:
-            d_checker = False
-            d_cnt = 0
+    global users
+        
+    if users:
+        if users[str(message.chat.id)]['d_checker']:
+            save_data(message)          # сохранение ответов
+            if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
+                dialogQuestion(message)
+                users[str(message.chat.id)]['d_cnt'] += 1
+            else:
+                users[str(message.chat.id)]['d_checker'] = False
+                users[str(message.chat.id)]['d_cnt'] = 0
 
     match message.text:
         case "Pepperoni": 
@@ -136,7 +148,11 @@ def replyer(message):
         case "АЛЕ!":
             MypyBot.reply_to(message, "НЕ ОРИ!")
         case _:
-            if d_checker == False and d_cnt == 0:
+            if users:
+                if users[str(message.chat.id)]['d_checker'] == False \
+                    and users[str(message.chat.id)]['d_cnt'] == 0:
+                    start_message(message)
+            else:
                 start_message(message)
 
 
