@@ -95,10 +95,12 @@ def dialog(message):
     if str(message.chat.id) not in users:
         users[str(message.chat.id)] = {
             'd_checker': False,
-            'd_cnt': 0 
+            'd_cnt': 0,
+            'result': None
         }
     users[str(message.chat.id)]['d_checker'] = True
     users[str(message.chat.id)]['d_cnt'] += 1
+    users[str(message.chat.id)]['result'] = 0
     MypyBot.send_message(message.chat.id,'Начало диалога')
     replyer(message)
 
@@ -116,19 +118,31 @@ def save_data(message):
     connection.close()
 
 
+def check_result(message):
+    if users[str(message.chat.id)]['d_cnt'] > 1:
+        scnt = 'q' + str(users[str(message.chat.id)]['d_cnt'] - 1)
+        for i in range(1, len(q_base[scnt])):
+            if message.text in q_base[scnt][str(i)].values():
+                a = list(q_base[scnt][str(i)].values())
+                if a[1]:
+                    users[str(message.chat.id)]['result'] += 1
+
+
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
     global users
         
     if users:
         if users[str(message.chat.id)]['d_checker']:
-            save_data(message)          # сохранение ответов
+            #save_data(message)          # сохранение ответов
+            check_result(message)
             if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
                 dialogQuestion(message)
                 users[str(message.chat.id)]['d_cnt'] += 1
             else:
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0
+                print(users[str(message.chat.id)]['result'])
 
     match message.text:
         case "Pepperoni": 
