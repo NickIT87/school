@@ -110,13 +110,31 @@ def dialog(message):
 
 
 def save_data(message):
+    global users
     u_name = message.from_user.first_name + '_' + message.from_user.last_name
     connection = sqlite3.connect('a_bot.db')            # подключиться к БД
     c = connection.cursor()                             # курсор по БД
-    c.execute(f'CREATE TABLE IF NOT EXISTS {u_name}(ansver TEXT, datestamp TEXT)')
+    c.execute(f'CREATE TABLE IF NOT EXISTS {u_name}(ansver TEXT, datestamp TEXT, result TEXT)')
     unix = time.time()
     date = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
-    c.execute(f"INSERT INTO {u_name} (ansver, datestamp) VALUES (?, ?)", (message.text, date))
+    c.execute(
+        f"INSERT INTO {u_name} (ansver, datestamp, result) VALUES (?, ?, ?)", 
+        (message.text, date, users[str(message.chat.id)]['result'])
+    )
+    connection.commit()
+    c.close()
+    connection.close()
+
+
+def save_result(message):
+    global users
+    connection = sqlite3.connect('a_bot.db')            # подключиться к БД
+    c = connection.cursor()                             # курсор по БД
+    c.execute(f'CREATE TABLE IF NOT EXISTS results(user TEXT, result TEXT)')
+    c.execute(
+        f"INSERT INTO results(user, result) VALUES (?, ?)", 
+        (str(message.from_user.first_name), users[str(message.chat.id)]['result'])
+    )
     connection.commit()
     c.close()
     connection.close()
@@ -138,7 +156,7 @@ def replyer(message):
         
     if users:
         if users[str(message.chat.id)]['d_checker']:
-            #save_data(message)           # сохранение ответов
+            save_data(message)           # сохранение ответов
             check_result(message)        # проверка ответа
             if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
                 dialogQuestion(message)         # задать вопрос
@@ -147,6 +165,7 @@ def replyer(message):
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0
                 print(users[str(message.chat.id)]['result'])
+                save_result(message)
                 MypyBot.send_message(
                     message.chat.id,
                     users[str(message.chat.id)]['result']
