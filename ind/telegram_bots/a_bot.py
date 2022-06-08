@@ -30,17 +30,21 @@ def start_message(message):
             /dialog
             /users
         """,
-        reply_markup=types.ReplyKeyboardRemove()
+        reply_markup=types.ReplyKeyboardRemove()    # убираем клавиатуру если была
     )
 
-
+# отладочная функция для отслеживания пользователей
 @MypyBot.message_handler(commands=['users'])
 def show_users(message):
     global users
+    msg = ''
     if not users:
         MypyBot.send_message(message.chat.id, 'no one')
     else:
-        MypyBot.send_message(message.chat.id, users)
+        print(len(users), users)
+        for user in users:
+            msg += str(user) + ' '
+        MypyBot.send_message(message.chat.id, msg)
 
 
 @MypyBot.message_handler(commands=['links'])
@@ -77,9 +81,9 @@ def button_pmenu(message):
 
 def dialogQuestion(msg):
     global users
-    m = []
-    scnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])
-    q = q_base[scnt]['text']
+    m = []      # markup objects
+    scnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])      # q1 q8 
+    q = q_base[scnt]['text']        # текст вопроса
     markup = types.ReplyKeyboardMarkup()
     for i in range(1, len(q_base[scnt])):
         item = types.KeyboardButton(q_base[scnt][str(i)]['text'])
@@ -107,8 +111,8 @@ def dialog(message):
 
 def save_data(message):
     u_name = message.from_user.first_name + '_' + message.from_user.last_name
-    connection = sqlite3.connect('a_bot.db')
-    c = connection.cursor()
+    connection = sqlite3.connect('a_bot.db')            # подключиться к БД
+    c = connection.cursor()                             # курсор по БД
     c.execute(f'CREATE TABLE IF NOT EXISTS {u_name}(ansver TEXT, datestamp TEXT)')
     unix = time.time()
     date = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
@@ -134,15 +138,19 @@ def replyer(message):
         
     if users:
         if users[str(message.chat.id)]['d_checker']:
-            #save_data(message)          # сохранение ответов
-            check_result(message)
+            #save_data(message)           # сохранение ответов
+            check_result(message)        # проверка ответа
             if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
-                dialogQuestion(message)
+                dialogQuestion(message)         # задать вопрос
                 users[str(message.chat.id)]['d_cnt'] += 1
             else:
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0
                 print(users[str(message.chat.id)]['result'])
+                MypyBot.send_message(
+                    message.chat.id,
+                    users[str(message.chat.id)]['result']
+                )
 
     match message.text:
         case "Pepperoni": 
