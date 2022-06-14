@@ -1,7 +1,6 @@
 from telebot import types
 
-from global_variables import MypyBot, users
-from qbase import q_base
+from settings import MypyBot, users, q_base
 from db_methods import *
 
 
@@ -27,7 +26,6 @@ def start_message(message):
 # отладочная функция для отслеживания пользователей
 @MypyBot.message_handler(commands=['users'])
 def show_users(message):
-    global users
     msg = ''
     if not users:
         MypyBot.send_message(message.chat.id, 'no one')
@@ -59,7 +57,7 @@ def button_message(message):
 
 @MypyBot.message_handler(commands=['pizza_menu'])
 def button_pmenu(message):
-    markup = types.ReplyKeyboardMarkup()
+    markup = types.ReplyKeyboardMarkup(one_time_keyboard=True)
     item1=types.KeyboardButton("Pepperoni")
     item2=types.KeyboardButton("Mushrooms")
     item3=types.KeyboardButton("Margarita")
@@ -72,7 +70,6 @@ def button_pmenu(message):
 
 @MypyBot.message_handler(commands=['dialog'])
 def dialog(message):
-    global users
     if str(message.chat.id) not in users:
         users[str(message.chat.id)] = {
             'd_checker': False,
@@ -91,7 +88,6 @@ def dialog(message):
 #--------------------#
 
 def dialogQuestion(msg):
-    global users
     m = []      # markup objects
     scnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])      # q1 q8 
     q = q_base[scnt]['text']        # текст вопроса
@@ -120,8 +116,6 @@ def check_result(message):
 
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
-    global users
-        
     if users:
         if users[str(message.chat.id)]['d_checker']:
             save_data(message)           # сохранение ответов
@@ -132,7 +126,6 @@ def replyer(message):
             else:
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0
-                print(users[str(message.chat.id)]['result'])
                 save_result(message)
                 MypyBot.send_message(
                     message.chat.id,

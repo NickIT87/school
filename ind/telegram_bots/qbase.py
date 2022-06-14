@@ -195,3 +195,14 @@ q_base = {
         },
     }
 }
+
+import json
+
+# txt = json.dumps(q_base, indent = 4)
+# print(txt)
+
+with open('q_base.json') as json_file:
+    data = json.load(json_file)
+
+print(type(data))
+print(data['q1']['text'])
