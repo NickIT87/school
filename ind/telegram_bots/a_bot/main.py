@@ -1,6 +1,6 @@
 from telebot import types
 
-from settings import MypyBot, users, q_base
+from settings import MypyBot, users, q_base, FILE_UPLOAD_PATH
 from db_methods import *
 
 
@@ -158,9 +158,31 @@ def replyer(message):
                 start_message(message)
 
 
-@MypyBot.message_handler(content_types = ['sticker'])
-def sticker_replyer(message):
-    print("sticker")
+@MypyBot.message_handler(content_types = ['sticker', 'photo'])
+def content_replyer(message):
+    if message.content_type == 'photo':
+        raw = message.photo[2].file_id
+        name = raw+".jpg"
+        file_info = MypyBot.get_file(raw)
+        downloaded_file = MypyBot.download_file(file_info.file_path)
+        with open(FILE_UPLOAD_PATH + name,'wb') as new_file:
+            new_file.write(downloaded_file)
+        img = open(FILE_UPLOAD_PATH + name, 'rb')
+        MypyBot.send_message(
+            message.chat.id,
+            "Запрос от\n*{name} {last}*".format(name=message.chat.first_name, last=message.chat.last_name),
+            parse_mode="Markdown"
+        ) #от кого идет сообщение и его содержание
+        MypyBot.send_photo(message.chat.id, img)
+        MypyBot.send_message(
+            message.chat.id, 
+            "*{name}!*\n\nСпасибо за инфу".format(
+                name=message.chat.first_name, 
+                last=message.chat.last_name, 
+                text=message.text
+            ), 
+            parse_mode="Markdown"
+        ) #то что пойдет юзеру после отправки сообщения
 
 
 #--------------------#

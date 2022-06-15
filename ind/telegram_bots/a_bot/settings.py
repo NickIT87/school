@@ -5,6 +5,11 @@ import json
 
 GLOBAL_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), '')
 
+if not os.path.exists(GLOBAL_PATH + 'uploads'):
+    os.mkdir(GLOBAL_PATH + 'uploads')
+
+FILE_UPLOAD_PATH = GLOBAL_PATH + 'uploads/' 
+
 with open(
     GLOBAL_PATH + 'token.txt', 
     'r'
