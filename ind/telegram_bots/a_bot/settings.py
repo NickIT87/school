@@ -16,7 +16,7 @@ with open(
 ) as ftoken:
     mytoken = ftoken.read()
 
-with open(GLOBAL_PATH + 'qbase.json') as json_file:
+with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file:
     q_base = json.load(json_file)
 
 MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
