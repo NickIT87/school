@@ -1,25 +1,18 @@
 from telebot import types
 
-from settings import MypyBot, users
+from settings import MypyBot, users, legend
 
 
 #--------------------#
 # COMMAND FUNCTIONS  #
 #--------------------#
 
-@MypyBot.message_handler(commands=['start'])
+@MypyBot.message_handler(commands=['start', 'help'])
 def start_message(message):
     MypyBot.send_message(
         message.chat.id,
-        """
-            Доброго дня, Вас вітає інтернет магазин прикрас:
-            Medved_biser.ua
-            https://www.instagram.com/medved_biser.ua/
-
-            Подивитись посилання на актуальні новини нашого магазину:
-            /links
-        """,
-        reply_markup=types.ReplyKeyboardRemove()    # убираем клавиатуру если была
+        legend,
+        reply_markup=types.ReplyKeyboardRemove()
     )
 
 
@@ -36,6 +29,14 @@ def button_message(message):
     )
     markup.add(item1, item2)
     MypyBot.send_message(message.chat.id,'Мои ссылки:',reply_markup=markup)
+
+
+
+
+@MypyBot.message_handler(commands=['find'])
+def yourCommand(message):
+    status: list = extract_arg(message.text)
+    print(status)
 
 
 # отладочная функция для отслеживания пользователей
@@ -55,7 +56,8 @@ def show_users(message):
 #  HELPER FUNCTIONS  #
 #--------------------#
 
-
+def extract_arg(arg) -> list:
+    return arg.split()[1:]
 
 
 #--------------------#

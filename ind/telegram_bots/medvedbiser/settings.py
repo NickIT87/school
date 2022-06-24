@@ -16,3 +16,11 @@ with open(
 
 MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
 users: dict = dict()  # user session data
+
+legend = """
+Доброго дня, Вас вітає інтернет магазин прикрас: Medved_biser.ua
+https://www.instagram.com/medved_biser.ua/
+
+Подивитись посилання на актуальні новини нашого магазину:
+/links
+"""
