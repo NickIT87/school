@@ -1,6 +1,6 @@
 from telebot import types
 
-from settings import MypyBot, users, legend
+from settings import MypyBot, users, legend, q_base
 
 
 #--------------------#
@@ -52,6 +52,21 @@ def show_users(message):
         MypyBot.send_message(message.chat.id, msg)
 
 
+@MypyBot.message_handler(commands=['by'])
+def by_item(message):
+    if str(message.chat.id) not in users:
+        users[str(message.chat.id)] = {
+            'd_checker': False,
+            'd_cnt': 0,
+        }
+    users[str(message.chat.id)]['d_checker'] = True
+    users[str(message.chat.id)]['d_cnt'] += 1
+    MypyBot.send_message(
+        message.chat.id,
+        'Ви розпочали оформлення замовлення, для скасування введіть команду /cancel'
+    )
+    replyer(message)
+
 #--------------------#
 #  HELPER FUNCTIONS  #
 #--------------------#
@@ -60,13 +75,35 @@ def extract_arg(arg) -> list:
     return arg.split()[1:]
 
 
+def dialogQuestion(msg):
+    qcnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])      # q1 q8 
+    q = q_base[qcnt]
+    MypyBot.send_message(
+        msg.chat.id, 
+        q, 
+    )
+
+
 #--------------------#
 # REPLYER FUNCTIONS  #
 #--------------------#
 
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
-   print(message.text)
+   if users:
+        if users[str(message.chat.id)]['d_checker']:
+            #save_data(message)           # сохранение ответов
+            if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
+                dialogQuestion(message)         # задать вопрос
+                users[str(message.chat.id)]['d_cnt'] += 1
+            else:
+                users[str(message.chat.id)]['d_checker'] = False
+                users[str(message.chat.id)]['d_cnt'] = 0
+                #save_result(message)
+                MypyBot.send_message(
+                    message.chat.id,
+                    "Ваше замовлення передано в обробку, менеджер зв'яжеться з Вами для підтвердження замовлення. Дякуємо за співпрацю."
+                )
 
 
 #--------------------#

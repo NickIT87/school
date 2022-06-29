@@ -11,8 +11,8 @@ with open(
 ) as ftoken:
     mytoken = ftoken.read()
 
-# with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file:
-#     q_base = json.load(json_file)
+with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file:
+    q_base = json.load(json_file)
 
 MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
 users: dict = dict()  # user session data
@@ -23,4 +23,7 @@ https://www.instagram.com/medved_biser.ua/
 
 Подивитись посилання на актуальні новини нашого магазину:
 /links
+
+Для замовлення товару використовуйте команду:
+/by
 """
