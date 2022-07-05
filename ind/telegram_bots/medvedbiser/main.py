@@ -1,6 +1,7 @@
 from telebot import types
 
 from settings import MypyBot, users, legend, q_base
+from db_methods import save_data, get_data
 
 
 #--------------------#
@@ -92,14 +93,17 @@ def dialogQuestion(msg):
 def replyer(message):
    if users:
         if users[str(message.chat.id)]['d_checker']:
-            #save_data(message)           # сохранение ответов
+            save_data(message)
             if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
                 dialogQuestion(message)         # задать вопрос
                 users[str(message.chat.id)]['d_cnt'] += 1
             else:
+                MypyBot.send_message(
+                    5085189951,
+                    get_data(list(users)[-1])
+                )
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0
-                #save_result(message)
                 MypyBot.send_message(
                     message.chat.id,
                     "Ваше замовлення передано в обробку, менеджер зв'яжеться з Вами для підтвердження замовлення. Дякуємо за співпрацю."
