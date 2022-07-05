@@ -7,16 +7,17 @@ from settings import users, GLOBAL_PATH
 
 def save_data(message):
     u_name = message.from_user.first_name + '_' + message.from_user.last_name
-    u_id = message.chat.id
+    u_id = str(message.chat.id)
+    table_name = u_name + '_' + u_id
     connection = sqlite3.connect(GLOBAL_PATH + 'mb_data.db')
     c = connection.cursor()
     c.execute(
-        f'CREATE TABLE IF NOT EXISTS {u_id}(ansver TEXT, datestamp TEXT)'
+        f'CREATE TABLE IF NOT EXISTS {table_name}(ansver TEXT, datestamp TEXT)'
     )
     unix = time.time()
     date = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
     c.execute(
-        f"INSERT INTO {u_id} (ansver, datestamp) VALUES (?, ?)", 
+        f"INSERT INTO {table_name} (ansver, datestamp) VALUES (?, ?)", 
         (message.text, date)
     )
     connection.commit()
