@@ -1,6 +1,6 @@
 from telebot import types
 
-from settings import MypyBot, users, legend, q_base
+from settings import MypyBot, users, legend, q_base, ROOT_ID
 from db_methods import save_data, get_data
 
 
@@ -49,7 +49,8 @@ def show_users(message):
     else:
         print(len(users), users)
         for user in users:
-            msg += str(user) + ' '
+            msg += str(user)
+            print(users[user]["d_checker"])
         MypyBot.send_message(message.chat.id, msg)
 
 
@@ -67,6 +68,17 @@ def by_item(message):
         'Ви розпочали оформлення замовлення, для скасування введіть команду /cancel'
     )
     replyer(message)
+
+
+@MypyBot.message_handler(commands=['cancel'])
+def cancel_dialog(message):
+    if not users:
+        MypyBot.send_message(message.chat.id, 'without cancellation')
+    else:
+        users[str(message.chat.id)]['d_checker'] = False
+        users[str(message.chat.id)]['d_cnt'] = 0
+        MypyBot.send_message(message.chat.id, "Придбання товару відмінено!")
+
 
 #--------------------#
 #  HELPER FUNCTIONS  #
@@ -92,15 +104,19 @@ def dialogQuestion(msg):
 @MypyBot.message_handler(content_types = ['text'])
 def replyer(message):
    if users:
-        if users[str(message.chat.id)]['d_checker']:
-            save_data(message)
+        if users and users[str(message.chat.id)]['d_checker']:
+            #save_data(message)
             if users[str(message.chat.id)]['d_cnt'] <= len(q_base):
-                dialogQuestion(message)         # задать вопрос
+                dialogQuestion(message)
                 users[str(message.chat.id)]['d_cnt'] += 1
             else:
                 MypyBot.send_message(
-                    5085189951,
-                    get_data(list(users)[-1])
+                    ROOT_ID,
+                    get_data(
+                        message.from_user.first_name + '_' \
+                         + message.from_user.last_name + '_' \
+                          + str(message.chat.id)
+                    )
                 )
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0

@@ -25,8 +25,15 @@ def save_data(message):
     connection.close()
 
 
-def get_data(u_id):
-    return f"Заказ {u_id} "
+def get_data(user_name_id):
+    connection = sqlite3.connect(GLOBAL_PATH + 'mb_data.db')
+    c = connection.cursor()
+    c.execute(f"SELECT * FROM {user_name_id}")
+    data = c.fetchall()
+    print(data)
+    c.close()
+    connection.close()
+    return f"Заказ {user_name_id} "
 
 
 
