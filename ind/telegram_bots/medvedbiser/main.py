@@ -1,4 +1,3 @@
-from regex import F
 from telebot import types
 
 from settings import MypyBot, users, legend, q_base, ROOT_ID
