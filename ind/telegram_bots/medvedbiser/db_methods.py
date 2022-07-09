@@ -1,8 +1,9 @@
+from re import template
 import sqlite3
 import time
 import datetime
 
-from settings import users, GLOBAL_PATH
+from settings import users, GLOBAL_PATH, order_template
 
 
 def save_data(message):  
@@ -39,7 +40,16 @@ def get_data(user_name_id):
     c = connection.cursor()
     c.execute(f"SELECT * FROM {user_name_id}")
     data = c.fetchall()
-    print(data)
     c.close()
     connection.close()
-    return f"Заказ {user_name_id}, {data}"
+    return order_template.format(
+        user_name_id, 
+        data[-1][0],
+        data[-1][1],
+        data[-1][2],
+        data[-1][3],
+        data[-1][4],
+        data[-1][5],
+        data[-1][6],
+        data[-1][7],
+    )
