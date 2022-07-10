@@ -1,4 +1,3 @@
-from re import template
 import sqlite3
 import time
 import datetime
@@ -13,29 +12,24 @@ def save_data(message):
     connection = sqlite3.connect(GLOBAL_PATH + 'mb_data.db')
     c = connection.cursor()
     c.execute(
-        f'CREATE TABLE IF NOT EXISTS {table_name}( title TEXT, size TEXT, amount TEXT, phone TEXT, destination TEXT, name TEXT, payment TEXT, datestamp TEXT, unix TEXT )'
+        f'CREATE TABLE IF NOT EXISTS {table_name}( title TEXT, size TEXT, amount TEXT, phone TEXT, destination TEXT, name TEXT, payment TEXT, datestamp TEXT, unix REAL )'
     )
     unix = time.time()
     date = str(datetime.datetime.fromtimestamp(unix).strftime('%Y-%m-%d %H:%M:%S'))
+    data_val = list(users[u_id]['order_values'].values())
+    data_val.extend([date, unix])
     c.execute(
         f"INSERT INTO {table_name} (title, size, amount, phone, destination, name, payment, datestamp, unix) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        (
-            users[u_id]['order']['q1'], 
-            users[u_id]['order']['q2'], 
-            users[u_id]['order']['q3'], 
-            users[u_id]['order']['q4'],
-            users[u_id]['order']['q5'],
-            users[u_id]['order']['q6'],
-            users[u_id]['order']['q7'],
-            date, unix
-        )
+        data_val
     )
     connection.commit()
     c.close()
     connection.close()
 
 
-def get_data(user_name_id):
+def get_data(message):
+    user_name_id = message.from_user.first_name + '_' \
+        + message.from_user.last_name + '_' + str(message.chat.id)
     connection = sqlite3.connect(GLOBAL_PATH + 'mb_data.db')
     c = connection.cursor()
     c.execute(f"SELECT * FROM {user_name_id}")
@@ -44,12 +38,5 @@ def get_data(user_name_id):
     connection.close()
     return order_template.format(
         user_name_id, 
-        data[-1][0],
-        data[-1][1],
-        data[-1][2],
-        data[-1][3],
-        data[-1][4],
-        data[-1][5],
-        data[-1][6],
-        data[-1][7],
+        data[-1]
     )

@@ -19,21 +19,22 @@ def start_message(message):
 
 @MypyBot.message_handler(commands=['links'])
 def button_message(message):
-    markup=types.InlineKeyboardMarkup()
-    item1=types.InlineKeyboardButton(
-        "Відгуки", 
+    markup = types.InlineKeyboardMarkup()
+    item1 = types.InlineKeyboardButton(
+        "Відгуки",
         url='https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTIyMTAyMzk4MzExODAx?igshid=YmMyMTA2M2Y='
     )
-    item2=types.InlineKeyboardButton(
-        "Ukrainian collection", 
+    item2 = types.InlineKeyboardButton(
+        "Ukrainian collection",
         url='https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTA5OTc3ODYyMzkxNTk1?igshid=YmMyMTA2M2Y='
     )
     markup.add(item1, item2)
-    MypyBot.send_message(message.chat.id,'Актуальні новини магазину: ',reply_markup=markup)
+    MypyBot.send_message(
+        message.chat.id, 'Актуальні новини магазину: ', reply_markup=markup)
 
 
 @MypyBot.message_handler(commands=['find'])
-def yourCommand(message):
+def find_item(message):
     status: list = extract_arg(message.text)
     print(status)
 
@@ -57,8 +58,8 @@ def by_item(message):
         users[str(message.chat.id)] = {
             'd_checker': False,
             'd_cnt': 0,
-            'order': {
-                'status': False,
+            'order_status': False,
+            'order_values': {
                 'q1': False,
                 'q2': False,
                 'q3': False,
@@ -83,7 +84,7 @@ def cancel_dialog(message):
     else:
         users[str(message.chat.id)]['d_checker'] = False
         users[str(message.chat.id)]['d_cnt'] = 0
-        users[str(message.chat.id)]['order']['status'] = False
+        users[str(message.chat.id)]['order_status'] = False
         MypyBot.send_message(message.chat.id, "Придбання товару відмінено!")
 
 
@@ -96,29 +97,30 @@ def extract_arg(arg) -> list:
 
 
 def dialogQuestion(msg):
-    qcnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])      # q1 q8 
+    qcnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])      # q1 q8
     q = q_base[qcnt]
     MypyBot.send_message(
-        msg.chat.id, 
-        q, 
+        msg.chat.id,
+        q,
     )
 
 
 def temp_save_ansvers(msg):
     if msg.text == '/by':
-        users[str(msg.chat.id)]['order']['status'] = True
+        users[str(msg.chat.id)]['order_status'] = True
     else:
         cnt = str(users[str(msg.chat.id)]['d_cnt'])
-        users[str(msg.chat.id)]['order']['q' + cnt] = msg.text
+        users[str(msg.chat.id)]['order_values']['q' + cnt] = msg.text
+
 
 #--------------------#
 # REPLYER FUNCTIONS  #
 #--------------------#
 
-@MypyBot.message_handler(content_types = ['text'])
+@MypyBot.message_handler(content_types=['text'])
 def replyer(message):
-   if users:
-        if users and users[str(message.chat.id)]['d_checker']:
+    if str(message.chat.id) in users:
+        if users[str(message.chat.id)]['d_checker']:
             temp_save_ansvers(message)
             if users[str(message.chat.id)]['d_cnt'] < len(q_base):
                 dialogQuestion(message)
@@ -127,14 +129,11 @@ def replyer(message):
                 save_data(message)
                 MypyBot.send_message(
                     ROOT_ID,
-                    get_data(
-                        message.from_user.first_name + '_' \
-                         + message.from_user.last_name + '_' \
-                          + str(message.chat.id)
-                    )
+                    get_data(message)
                 )
                 users[str(message.chat.id)]['d_checker'] = False
                 users[str(message.chat.id)]['d_cnt'] = 0
+                users[str(message.chat.id)]['order_status'] = False
                 MypyBot.send_message(
                     message.chat.id,
                     "Ваше замовлення передано в обробку, менеджер зв'яжеться з Вами для підтвердження замовлення. Дякуємо за співпрацю."
