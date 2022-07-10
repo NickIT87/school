@@ -82,9 +82,7 @@ def cancel_dialog(message):
     if not users:
         MypyBot.send_message(message.chat.id, 'without cancellation')
     else:
-        users[str(message.chat.id)]['d_checker'] = False
-        users[str(message.chat.id)]['d_cnt'] = 0
-        users[str(message.chat.id)]['order_status'] = False
+        clear_user(message.chat.id)
         MypyBot.send_message(message.chat.id, "Придбання товару відмінено!")
 
 
@@ -97,12 +95,8 @@ def extract_arg(arg) -> list:
 
 
 def dialogQuestion(msg):
-    qcnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])      # q1 q8
-    q = q_base[qcnt]
-    MypyBot.send_message(
-        msg.chat.id,
-        q,
-    )
+    qcnt = 'q' + str(users[str(msg.chat.id)]['d_cnt'])
+    MypyBot.send_message(msg.chat.id, q_base[qcnt])
 
 
 def temp_save_ansvers(msg):
@@ -111,6 +105,14 @@ def temp_save_ansvers(msg):
     else:
         cnt = str(users[str(msg.chat.id)]['d_cnt'])
         users[str(msg.chat.id)]['order_values']['q' + cnt] = msg.text
+
+
+def clear_user(id):
+    users[str(id)]['d_checker'] = False
+    users[str(id)]['d_cnt'] = 0
+    users[str(id)]['order_status'] = False
+    for key in users[str(id)]['order_values'].keys():
+        users[str(id)]['order_values'][key] = False
 
 
 #--------------------#
@@ -131,9 +133,7 @@ def replyer(message):
                     ROOT_ID,
                     get_data(message)
                 )
-                users[str(message.chat.id)]['d_checker'] = False
-                users[str(message.chat.id)]['d_cnt'] = 0
-                users[str(message.chat.id)]['order_status'] = False
+                clear_user(message.chat.id)
                 MypyBot.send_message(
                     message.chat.id,
                     "Ваше замовлення передано в обробку, менеджер зв'яжеться з Вами для підтвердження замовлення. Дякуємо за співпрацю."
