@@ -6,10 +6,7 @@ import json
 GLOBAL_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), '')
 ROOT_ID = 655481481 #5085189951 
 
-with open(
-    GLOBAL_PATH + 'token.txt', 
-    'r'
-) as ftoken:
+with open(GLOBAL_PATH + 'token.txt', 'r') as ftoken:
     mytoken = ftoken.read()
 
 with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file:
