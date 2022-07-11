@@ -11,11 +11,7 @@ from db_methods import save_data, get_data
 
 @MypyBot.message_handler(commands=['start', 'help'])
 def start_message(message):
-    MypyBot.send_message(
-        message.chat.id,
-        legend,
-        reply_markup=types.ReplyKeyboardRemove()
-    )
+    MypyBot.send_message(message.chat.id, legend, reply_markup=types.ReplyKeyboardRemove())
 
 
 @MypyBot.message_handler(commands=['links'])
@@ -32,6 +28,24 @@ def button_message(message):
     markup.add(item1, item2)
     MypyBot.send_message(
         message.chat.id, 'Актуальні новини магазину: ', reply_markup=markup)
+
+
+@MypyBot.message_handler(commands=['catalog'])
+def show_catalog(message):
+    
+    # functionality in progress ...
+    
+    markup = types.InlineKeyboardMarkup()
+    btn_link1 = types.InlineKeyboardButton(
+        "...",
+        url='https://...'
+    )
+    btn_link2 = types.InlineKeyboardButton(
+        "...",
+        url='https://...'
+    )
+    markup.add(btn_link1, btn_link2)
+    MypyBot.send_message(message.chat.id, 'Каталог: ', reply_markup=markup)
 
 
 @MypyBot.message_handler(commands=['find'])
@@ -60,15 +74,7 @@ def by_item(message):
             'd_checker': False,
             'd_cnt': 0,
             'order_status': False,
-            'order_values': {
-                'q1': False,
-                'q2': False,
-                'q3': False,
-                'q4': False,
-                'q5': False,
-                'q6': False,
-                'q7': False,
-            }
+            'order_values': dict(('q' + str(i), False) for i in range(1, len(q_base)+1))
         }
     users[str(message.chat.id)]['d_checker'] = True
     MypyBot.send_message(
@@ -101,10 +107,7 @@ def replyer(message):
                 users[str(message.chat.id)]['d_cnt'] += 1
             else:
                 save_data(message)
-                MypyBot.send_message(
-                    ROOT_ID,
-                    get_data(message)
-                )
+                MypyBot.send_message(ROOT_ID, get_data(message))
                 clear_user(message.chat.id)
                 MypyBot.send_message(
                     message.chat.id,
