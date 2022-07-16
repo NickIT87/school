@@ -97,7 +97,7 @@ def callback_query(call):
         bot.edit_message_text(f'Страница {page} из {count}', reply_markup = markup, chat_id=call.message.chat.id, message_id=call.message.message_id)
 
 
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(commands=['catalog'])
 def start(m):
     count = 10
     page = 1

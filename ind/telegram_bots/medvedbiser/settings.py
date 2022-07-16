@@ -9,8 +9,11 @@ ROOT_ID = 655481481 #5085189951
 with open(GLOBAL_PATH + 'token.txt', 'r') as ftoken:
     mytoken = ftoken.read()
 
-with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file:
-    q_base = json.load(json_file)
+with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file1:
+    q_base = json.load(json_file1)
+
+with open(GLOBAL_PATH + 'items.json', encoding='utf-8') as json_file2:
+    items_base = json.load(json_file2)
 
 MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
 users: dict = dict()  # user session data
