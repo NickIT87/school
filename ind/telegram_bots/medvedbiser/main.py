@@ -1,9 +1,9 @@
 import json
-from math import ceil
-from telebot.types import InlineKeyboardMarkup, ReplyKeyboardRemove
+from telebot.types import InlineKeyboardMarkup, \
+    InlineKeyboardButton, ReplyKeyboardRemove
 
 from helpers import *
-from settings import legend, ROOT_ID
+from settings import legend, ROOT_ID, COUNT_PAGES, BTNS_LIST
 from db_methods import save_data, get_data
 
 
@@ -14,30 +14,27 @@ from db_methods import save_data, get_data
 @MypyBot.callback_query_handler(func=lambda call:True)
 def callback_query(call):
     req = call.data.split('_')
-		#Обработка кнопки - скрыть
+	    # Обработка кнопки - скрыть
     if req[0] == 'unseen':
         MypyBot.delete_message(call.message.chat.id, call.message.message_id)
-    #Обработка кнопок - вперед и назад
+        #Обработка кнопок - вперед и назад
     elif 'pagination' in req[0]:
-      	#Расспарсим полученный JSON
+      	    #Расспарсим полученный JSON
         json_string = json.loads(req[0])
         count = json_string['CountPage']
         page = json_string['NumberPage']
-        print(page)
-        print(count)
-				#Пересоздаем markup
+            #Пересоздаем markup
         markup = InlineKeyboardMarkup()
-        markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
         
-        #markup для первой страницы
+        ##########################################
+        #      add check for out of range        # 
+        ##########################################
+
+        for i in BTNS_LIST[page-1]:
+            markup.add(i)
+        markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
+
         if page == 1:
-
-            ########## MINE ###############
-            btn_list = get_catalog_btns()
-            for i in btn_list:
-                markup.add(i)
-            ########## MINE ###############
-
             markup.add(
                 InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' '),
                 InlineKeyboardButton(
@@ -47,15 +44,8 @@ def callback_query(call):
                     ) + ",\"CountPage\":" + str(count) + "}"
                 )
             )
-        #markup для второй страницы
+        #markup для последней страницы
         elif page == count:
-
-            ########## MINE ###############
-            btn_list = get_catalog_btns()
-            for i in btn_list:
-                markup.add(i)
-            ########## MINE ###############
-
             markup.add(
                 InlineKeyboardButton(
                     text=f'<--- Назад',
@@ -66,13 +56,6 @@ def callback_query(call):
             )
         #markup для остальных страниц
         else:
-
-            ########## MINE ###############
-            btn_list = get_catalog_btns()
-            for i in btn_list:
-                markup.add(i)
-            ########## MINE ###############
-
             markup.add(
                 InlineKeyboardButton(text=f'<--- Назад', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page-1) + ",\"CountPage\":" + str(count) + "}"),
                 InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' '),
@@ -88,7 +71,6 @@ def callback_query(call):
 @MypyBot.message_handler(commands=['start', 'help'])
 def start_message(message):
     MypyBot.send_message(message.chat.id, legend, reply_markup=ReplyKeyboardRemove())
-    get_catalog_btns()
 
 
 @MypyBot.message_handler(commands=['links'])
@@ -109,27 +91,18 @@ def button_message(message):
 
 @MypyBot.message_handler(commands=['catalog'])
 def show_catalog(message):
-    count = ceil( len(items_base) / NUM_BTNS )
     page = 1
     markup = InlineKeyboardMarkup()
-
-    ########## MINE ###############
-    btn_list = get_catalog_btns()
-    for i in btn_list:
+    for i in BTNS_LIST[page-1]:
         markup.add(i)
-    ########## MINE ###############
-
     markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
     markup.add(
-        InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' '),
+        InlineKeyboardButton(text=f'{page}/{COUNT_PAGES}', callback_data=f' '),
         InlineKeyboardButton(
             text=f'Вперёд --->', 
-            callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(
-                page+1
-            ) + ",\"CountPage\":" + str(count) + "}"
+            callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page+1) + ",\"CountPage\":" + str(COUNT_PAGES) + "}"
         )
     )
-
     MypyBot.send_message(message.from_user.id, "Привет!!!", reply_markup = markup)
 
 

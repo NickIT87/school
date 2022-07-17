@@ -1,24 +1,9 @@
-from telebot.types import InlineKeyboardButton
-
-from settings import MypyBot, users, q_base, items_base, NUM_BTNS
+from settings import MypyBot, users, q_base
 
 
 #--------------------#
 #  HELPER FUNCTIONS  #
 #--------------------#
-def get_catalog_btns():
-    all_btns = []
-    for key in items_base:
-        btn = InlineKeyboardButton(
-            items_base[key]['title'] + " (" + items_base[key]['price'] + " UAH)",
-            url=items_base[key]['link']
-        )
-        all_btns.append(btn)
-    
-    # btns = np.array_split()
-
-    return all_btns
-
 
 def extract_arg(arg) -> list:
     return arg.split()[1:]

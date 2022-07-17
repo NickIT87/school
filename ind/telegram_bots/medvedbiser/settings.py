@@ -1,4 +1,7 @@
+import numpy as np
+from telebot.types import InlineKeyboardButton
 import telebot
+from math import ceil
 import os
 import json
 
@@ -6,21 +9,47 @@ import json
 GLOBAL_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), '')
 ROOT_ID = 655481481 #5085189951
 
-# number of buttons per catalog page
-NUM_BTNS = 10
-
-with open(GLOBAL_PATH + 'token.txt', 'r') as ftoken:
-    mytoken = ftoken.read()
 
 with open(GLOBAL_PATH + 'qbase.json', encoding='utf-8') as json_file1:
     q_base = json.load(json_file1)
 
-with open(GLOBAL_PATH + 'items.json', encoding='utf-8') as json_file2:
-    items_base = json.load(json_file2)
+with open(GLOBAL_PATH + 'token.txt', 'r') as ftoken:
+    mytoken = ftoken.read()
+
 
 MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
 users: dict = dict()  # user session data
 
+
+# open catalog json
+with open(GLOBAL_PATH + 'items.json', encoding='utf-8') as json_file2:
+    items_base = json.load(json_file2)
+
+# number of buttons per catalog page
+MAX_BTNS: int = 10
+COUNT_PAGES: int = ceil( len(items_base) / MAX_BTNS )
+
+def __get_list_catalog_btns():
+    all_btns, btns = [], []
+
+    for key in items_base:
+        btn = InlineKeyboardButton(
+            items_base[key]['title'] + " (" + items_base[key]['price'] + " UAH)",
+            url=items_base[key]['link']
+        )
+        all_btns.append(btn)
+    
+    np_btns = np.array_split(np.array(all_btns), COUNT_PAGES)
+    for i in np_btns:
+        btns.append(list(i))
+
+    return btns
+
+# export list of buttons for pagination
+BTNS_LIST: list = __get_list_catalog_btns()
+
+
+# Templates
 legend = """
 Доброго дня, Вас вітає інтернет магазин прикрас: Medved_biser.ua
 https://www.instagram.com/medved_biser.ua/
