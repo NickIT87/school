@@ -1,26 +1,15 @@
-from telebot.types import  ReplyKeyboardMarkup, \
-    InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove
 import json
+from math import ceil
+from telebot.types import InlineKeyboardMarkup, ReplyKeyboardRemove
 
 from helpers import *
-from settings import legend, ROOT_ID, items_base
+from settings import legend, ROOT_ID
 from db_methods import save_data, get_data
 
 
 #--------------------#
 # CALLBACK FUNCTION  #
 #--------------------#
-
-def get_catalog_btns():
-    btns = []
-    for i in items_base:
-        btn = InlineKeyboardButton(
-            items_base[i]['title'] + " (" + items_base[i]['price'] + " UAH)",
-            url=items_base[i]['link']
-        )
-        btns.append(btn)
-    return btns
-
 
 @MypyBot.callback_query_handler(func=lambda call:True)
 def callback_query(call):
@@ -34,6 +23,8 @@ def callback_query(call):
         json_string = json.loads(req[0])
         count = json_string['CountPage']
         page = json_string['NumberPage']
+        print(page)
+        print(count)
 				#Пересоздаем markup
         markup = InlineKeyboardMarkup()
         markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
@@ -118,7 +109,7 @@ def button_message(message):
 
 @MypyBot.message_handler(commands=['catalog'])
 def show_catalog(message):
-    count = 10
+    count = ceil( len(items_base) / NUM_BTNS )
     page = 1
     markup = InlineKeyboardMarkup()
 
