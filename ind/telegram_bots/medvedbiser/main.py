@@ -26,10 +26,6 @@ def callback_query(call):
             #Пересоздаем markup
         markup = InlineKeyboardMarkup()
         
-        ##########################################
-        #      add check for out of range        # 
-        ##########################################
-
         for i in BTNS_LIST[page-1]:
             markup.add(i)
         markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
@@ -96,13 +92,14 @@ def show_catalog(message):
     for i in BTNS_LIST[page-1]:
         markup.add(i)
     markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
-    markup.add(
-        InlineKeyboardButton(text=f'{page}/{COUNT_PAGES}', callback_data=f' '),
-        InlineKeyboardButton(
-            text=f'Вперёд --->', 
-            callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page+1) + ",\"CountPage\":" + str(COUNT_PAGES) + "}"
+    if len(BTNS_LIST) > 1:
+        markup.add(
+            InlineKeyboardButton(text=f'{page}/{COUNT_PAGES}', callback_data=f' '),
+            InlineKeyboardButton(
+                text=f'Вперёд --->', 
+                callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page+1) + ",\"CountPage\":" + str(COUNT_PAGES) + "}"
+            )
         )
-    )
     MypyBot.send_message(message.from_user.id, "Привет!!!", reply_markup = markup)
 
 
