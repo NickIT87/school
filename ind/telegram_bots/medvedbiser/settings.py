@@ -39,10 +39,11 @@ def __get_list_catalog_btns():
         )
         all_btns.append(btn)
     
-    np_btns = np.array_split(np.array(all_btns), COUNT_PAGES)
-    for i in np_btns:
-        btns.append(list(i))
-
+    if len(all_btns) > 0:
+        np_btns = np.array_split(np.array(all_btns), COUNT_PAGES)
+        for i in np_btns:
+            btns.append(list(i))
+    
     return btns
 
 # export list of buttons for pagination

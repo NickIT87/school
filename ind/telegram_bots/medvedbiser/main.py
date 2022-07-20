@@ -89,9 +89,12 @@ def button_message(message):
 def show_catalog(message):
     page = 1
     markup = InlineKeyboardMarkup()
-    for i in BTNS_LIST[page-1]:
-        markup.add(i)
-    markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
+    if len(BTNS_LIST) > 0:
+        for i in BTNS_LIST[page-1]:
+            markup.add(i)
+        markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
+    else:
+        return MypyBot.send_message(message.from_user.id, "Empty catalog!")
     if len(BTNS_LIST) > 1:
         markup.add(
             InlineKeyboardButton(text=f'{page}/{COUNT_PAGES}', callback_data=f' '),
