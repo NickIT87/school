@@ -26,28 +26,19 @@ def callback_query(call):
             #Пересоздаем markup
         markup = InlineKeyboardMarkup()
         
-        for i in BTNS_LIST[page-1]:
-            markup.add(i)
+        for button in BTNS_LIST[page-1]:
+            markup.add(button)
         markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
 
         if page == 1:
             markup.add(
                 InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' '),
-                InlineKeyboardButton(
-                    text=f'Вперёд --->',
-                    callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(
-                        page + 1
-                    ) + ",\"CountPage\":" + str(count) + "}"
-                )
+                InlineKeyboardButton(text=f'Вперёд --->', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page + 1) + ",\"CountPage\":" + str(count) + "}")
             )
         #markup для последней страницы
         elif page == count:
             markup.add(
-                InlineKeyboardButton(
-                    text=f'<--- Назад',
-                    callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(
-                        page - 1
-                    ) + ",\"CountPage\":" + str(count) + "}"),
+                InlineKeyboardButton(text=f'<--- Назад', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page - 1) + ",\"CountPage\":" + str(count) + "}"),
                 InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' ')
             )
         #markup для остальных страниц
@@ -90,8 +81,8 @@ def show_catalog(message):
     page = 1
     markup = InlineKeyboardMarkup()
     if len(BTNS_LIST) > 0:
-        for i in BTNS_LIST[page-1]:
-            markup.add(i)
+        for button in BTNS_LIST[page-1]:
+            markup.add(button)
         markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
     else:
         return MypyBot.send_message(message.from_user.id, "Empty catalog!")
