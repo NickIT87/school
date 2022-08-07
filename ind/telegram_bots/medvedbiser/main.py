@@ -28,12 +28,12 @@ def callback_query(call):
         
         for button in BTNS_LIST[page-1]:
             markup.add(button)
-        markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
+        markup.add(InlineKeyboardButton(text='Приховати', callback_data='unseen'))
 
         if page == 1:
             markup.add(
                 InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' '),
-                InlineKeyboardButton(text=f'Вперёд --->', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page + 1) + ",\"CountPage\":" + str(count) + "}")
+                InlineKeyboardButton(text=f'Вперед --->', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page + 1) + ",\"CountPage\":" + str(count) + "}")
             )
         #markup для последней страницы
         elif page == count:
@@ -46,9 +46,9 @@ def callback_query(call):
             markup.add(
                 InlineKeyboardButton(text=f'<--- Назад', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page-1) + ",\"CountPage\":" + str(count) + "}"),
                 InlineKeyboardButton(text=f'{page}/{count}', callback_data=f' '),
-                InlineKeyboardButton(text=f'Вперёд --->', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page+1) + ",\"CountPage\":" + str(count) + "}")
+                InlineKeyboardButton(text=f'Вперед --->', callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page+1) + ",\"CountPage\":" + str(count) + "}")
             )
-        MypyBot.edit_message_text(f'Страница {page} из {count}', reply_markup = markup, chat_id=call.message.chat.id, message_id=call.message.message_id)
+        MypyBot.edit_message_text(f'Сторінка {page} з {count}', reply_markup = markup, chat_id=call.message.chat.id, message_id=call.message.message_id)
 
 
 #--------------------#
@@ -83,18 +83,18 @@ def show_catalog(message):
     if len(BTNS_LIST) > 0:
         for button in BTNS_LIST[page-1]:
             markup.add(button)
-        markup.add(InlineKeyboardButton(text='Скрыть', callback_data='unseen'))
+        markup.add(InlineKeyboardButton(text='Приховати', callback_data='unseen'))
     else:
         return MypyBot.send_message(message.from_user.id, "Empty catalog!")
     if len(BTNS_LIST) > 1:
         markup.add(
             InlineKeyboardButton(text=f'{page}/{COUNT_PAGES}', callback_data=f' '),
             InlineKeyboardButton(
-                text=f'Вперёд --->', 
+                text=f'Вперед --->', 
                 callback_data="{\"method\":\"pagination\",\"NumberPage\":" + str(page+1) + ",\"CountPage\":" + str(COUNT_PAGES) + "}"
             )
         )
-    MypyBot.send_message(message.from_user.id, "Привет!!!", reply_markup = markup)
+    MypyBot.send_message(message.from_user.id, "Каталог: <b>Medved_biser.ua</b>", reply_markup = markup)
 
 
 @MypyBot.message_handler(commands=['find'])
@@ -116,7 +116,7 @@ def show_users(message):
         MypyBot.send_message(message.chat.id, msg)
 
 
-@MypyBot.message_handler(commands=['by'])
+@MypyBot.message_handler(commands=['buy'])
 def by_item(message):
     if str(message.chat.id) not in users:
         users[str(message.chat.id)] = {

@@ -17,7 +17,7 @@ with open(GLOBAL_PATH + 'token.txt', 'r') as ftoken:
     mytoken = ftoken.read()
 
 
-MypyBot = telebot.TeleBot(token=mytoken, parse_mode = None)
+MypyBot = telebot.TeleBot(token=mytoken, parse_mode = "HTML")
 users: dict = dict()  # user session data
 
 
@@ -40,6 +40,7 @@ def __get_list_catalog_btns():
         all_btns.append(btn)
     
     if len(all_btns) > 0:
+        all_btns.reverse()
         np_btns = np.array_split(np.array(all_btns), COUNT_PAGES)
         for i in np_btns:
             btns.append(list(i))
@@ -52,7 +53,8 @@ BTNS_LIST: list = __get_list_catalog_btns()
 
 # Templates
 legend = """
-Доброго дня, Вас вітає інтернет магазин прикрас: Medved_biser.ua
+Доброго дня, Вас вітає інтернет магазин прикрас: 
+<b>Medved_biser.ua</b>
 https://www.instagram.com/medved_biser.ua/
 
 Подивитись посилання на актуальні новини нашого магазину:
@@ -62,7 +64,7 @@ https://www.instagram.com/medved_biser.ua/
 /catalog
 
 Для замовлення товару використовуйте команду:
-/by
+/buy
 """
 
 order_template = """
