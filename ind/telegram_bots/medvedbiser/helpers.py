@@ -15,7 +15,7 @@ def dialogQuestion(msg):
 
 
 def temp_save_ansvers(msg):
-    if msg.text == '/by':
+    if msg.text == '/buy':
         users[str(msg.chat.id)]['order_status'] = True
     else:
         cnt = str(users[str(msg.chat.id)]['d_cnt'])
