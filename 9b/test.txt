@@ -1,1 +1,5 @@
 some test case for the zip file library
+
+file -I test.txt
+
+iconv -f us-ascii -t utf-8 test.txt > test_n.txt
