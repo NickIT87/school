@@ -3,5 +3,6 @@
     "editor.fontSize": 24,
     "editor.fontLigatures": false,
     "terminal.integrated.fontSize": 20,
-    "debug.console.fontSize": 18
+    "debug.console.fontSize": 18,
+    "editor.tabSize": 4
 }
