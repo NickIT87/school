@@ -16,20 +16,17 @@ def something(a):
         return False
 
 
-def UEFA_practice():
-    kom = int(input("Увести номер команди: "))
+def UEFA_practice(kom):
     if kom == 1 or kom == 2 or kom == 5:
-        kr = "Іспанія"
+        return "Іспанія"
     else:
         if kom == 3 or kom == 7:
-            kr = "Німеччина"
+            return "Німеччина"
         else:
             if kom == 4 or kom == 9 or kom == 10:
-                kr = "Англія"
+                return "Англія"
             else:
                 if kom == 6 or kom == 8:
-                    kr = "Португалія"
+                    return "Португалія"
                 else:
-                    kr = "Рейтинг невідомий"
-    print("Країна - ", kr)
-    input()
+                    return False
