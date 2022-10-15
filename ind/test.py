@@ -37,6 +37,9 @@ class Student:
         self.age = age
         self.class_number = c_num
 
+    def __str__(self) -> str:
+        return self.name
+
     def say(self):
         print("hello my name is ", self.name)
 
@@ -44,7 +47,7 @@ class Student:
 s1 = Student("Arina", 12, "5a")
 s2 = Student("Ivan", 13, "5b")
 
-
+print(s1)
 print(s1.say())         # вызов приветствия у студента № 1
 print(s2.say())         # вызов приветствия у студента № 2
 print(v_list[1], len(v_list))
