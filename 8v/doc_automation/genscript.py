@@ -2,7 +2,7 @@ from docxtpl import DocxTemplate, RichText
 
 doc = DocxTemplate("my_word_template.docx")
 
-rt = RichText("hyperlink: ")
+rt = RichText("hyperlink: ", color='#ff00ff')
 rt.add(
     'google',
     url_id=doc.build_url_id('http://google.com'), 
@@ -10,7 +10,7 @@ rt.add(
 )
 
 context = { 
-    'company_name' : "8 в",
+    'company_name' : "10 б",
     'rt': rt
 }
 
