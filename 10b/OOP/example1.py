@@ -1,14 +1,20 @@
 class Car:
-    def __init__(self, b):
-        self.__b = b
+    model = "Hundai"
+    repair_history = ['28.11.22', '30.11.22']
+    __usage_history: str = None
 
-    def get_b(self):
-        return self.__b
+    def __init__(self, use_data: str = "No history"):
+        print("init")
+        self.__usage_history = use_data
 
-ob = Car(2)
-ob.__b = 4
+    def get_last_data_repair(self):
+        return self.repair_history[1:]
 
+    def get_usage_history(self):
+        return self.__usage_history
 
-print(ob.get_b())
-print(ob.__b, type(ob.__b))
-print(ob.get_b())
+    def set_usage_history(self, history: str):
+        self.usage_history = history
+
+car1 = Car()
+print(car1.get_usage_history())
