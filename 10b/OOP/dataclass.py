@@ -56,6 +56,7 @@ class Employee(object):
     birth: str
     # non required args
     age: int = None
+    #ages_list: list = []
 
 
 e1 = Employee("John", "Smith", birth="01.10.1990")
