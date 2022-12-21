@@ -1,13 +1,16 @@
 # Рекурсивна функція обчислення факторіалу числа.
 # в якості аргумента приймає ціле число та
 # має повернути значення факторіалу цього числа.
+# Факторіал натурального числа n визначається як 
+# добуток усіх натуральних чисел від 1 до n включно:
 def factorial(n: int) -> int:
     """
     n: positive integer number.
     Function performs the calculation of the 
     product of integer, positive, natural numbers.
     """
-    if n <= 1:
+    # якщо число меньше або дорівнює одиниці то відповідь є 1
+    if n <= 1:      # 0! == 1 && 1! == 1
         return 1
     else:
         return n*factorial(n-1)
