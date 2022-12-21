@@ -14,8 +14,8 @@ for i in range(30):
 
 print(data)
 
-plt.plot(data)
-plt.show()
+# plt.plot(data)
+# plt.show()
 
 # from math import pi, sin, cos
 # import turtle
