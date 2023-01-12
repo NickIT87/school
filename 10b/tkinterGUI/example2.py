@@ -5,10 +5,22 @@ class Kl9_04:
     def __init__(self, a, b, c, d):
         self.s = a + b
         self.p = c * d
-        self.but1 = Button(root)
+        self.but1 = Button(
+            root,
+            width = 15,
+            height = 2,
+            fg = "red"
+        )
         self.but1['text'] = 'Додавання'
+        self.but1['bg'] = "#2596be"
         self.but1.pack()
-        self.but2 = Button(root)
+        self.but2 = Button(
+            root,
+            width=30,
+            height=3,
+            bg = "#2596be",
+            fg = "red"
+        )
         self.but2['text'] = 'Множення'
         self.but2.pack()
         self.but1.bind("<Button-1>", self.func1)

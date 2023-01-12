@@ -13,7 +13,13 @@ def multiply(fff):
 
 root = Tk()
 
-but1 = Button(root)
+but1 = Button(
+    root,
+    width = 15,
+    height = 2,
+    background = "blue",
+    fg = "white"
+)
 but1['text'] = 'adding'
 but1.bind("<Button>", add)
 
