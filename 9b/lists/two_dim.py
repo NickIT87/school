@@ -49,21 +49,22 @@ print(ansv)
 # сумму парних елементів масива
 
 # 1.1
-# pairs_elems = []
-# for i in b:
-#     if i % 2 == 0:
-#         pairs_elems.append(i)
-# print(sum(pairs_elems))
+pairs_elems = 0
+for j in b:
+    print(j)
+    for i in j:
+        if i % 2 == 0:
+            pairs_elems += i
+print(pairs_elems)
 
 # 1.2
-# print(sum(list(filter(lambda n: n % 2 == 0, b))))
-
+print(sum(list(map(lambda m: sum(list(filter(lambda n: n % 2 == 0, m))), b))))
 
 # 2. сума кількості елементів що задовільняють певним умовам:
 # перші 10 елементів або останні 20
 
-# x = b[:10]
-# print(sum(x))
+x = b[0][:5]
+print(sum(x))
 
-# y = b[-20:]
-# print(sum(y))
+y = b[0][-5:]
+print(sum(y))
