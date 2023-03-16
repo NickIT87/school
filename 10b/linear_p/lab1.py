@@ -31,16 +31,16 @@ for var in problem.variables():
 
 # Define the constraint functions
 def constraint1(x):
-    return -4*x + 500
+    return 500 - 4*x
 
 def constraint2(x):
     return np.full_like(x, 300)
 
 def constraint3(x):
-    return -x + 150
+    return 150 - x
 
 def constraint4(x):
-    return -4*x + 300
+    return 300 - 4 * x
 
 # Create a grid of x values
 x = np.linspace(0, 100, 1000)
