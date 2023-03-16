@@ -10,13 +10,13 @@ x1 = pulp.LpVariable('x1', lowBound=0)
 x2 = pulp.LpVariable('x2', lowBound=0)
 
 # Add the objective function
-problem += 4 * x1 + x2
+problem += x1 + x2
 
 # Add the constraints
-problem += 6*x1 + x2 <= 430
-problem += 3*x2 <= 250
-problem += x1 + 4*x2 <= 200
-problem += 6*x1 + x2 <= 600
+problem += 4*x1 + x2 <= 500
+problem += x2 <= 300
+problem += x1 + x2 <= 150
+problem += 4*x1 + x2 <= 300
 
 # Solve the problem
 status = problem.solve()
@@ -31,28 +31,33 @@ for var in problem.variables():
 
 # Define the constraint functions
 def constraint1(x):
-    return -6*x + 430
+    return -4*x + 500
 
 def constraint2(x):
-    return np.full_like(x, 83.33)
+    return np.full_like(x, 300)
 
 def constraint3(x):
-    return -0.25*x + 50
+    return -x + 150
 
 def constraint4(x):
-    return -6*x + 600
+    return -4*x + 300
 
 # Create a grid of x values
 x = np.linspace(0, 100, 1000)
 
 # Plot the constraints
-plt.plot(x, constraint1(x), label='6*x1 + x2 <= 430')
-plt.plot(x, constraint2(x), label='3*x2 <= 250')
-plt.plot(x, constraint3(x), label='x1 + 4*x2 <= 200')
-plt.plot(x, constraint4(x), label='6*x1 + x2 <= 600')
+plt.plot(x, constraint1(x), label='4*x1 + x2 <= 500')
+plt.plot(x, constraint2(x), label='x2 <= 300')
+plt.plot(x, constraint3(x), label='x1 + x2 <= 150')
+plt.plot(x, constraint4(x), label='4*x1 + x2 <= 300')
 
 # plot the optimal solution
 plt.scatter(x1.value(), x2.value(), marker='o', s=100, color='green', label='Optimal solution')
+
+# Shade the feasible region
+y5 = np.maximum(constraint1(x), 0)
+y6 = np.minimum(constraint4(x), constraint3(x))
+plt.fill_between(x, y5, y6, where=y5>y6, color='grey', alpha=0.5, label='Feasible Region')
 
 # Label the plot
 plt.title('Feasible Region')
