@@ -1,4 +1,6 @@
 from ortools.linear_solver import pywraplp
+import numpy as np
+import matplotlib.pyplot as plt
 
 # Створення симплекс-солвера
 solver = pywraplp.Solver.CreateSolver('GLOP')
@@ -25,20 +27,9 @@ if status == pywraplp.Solver.OPTIMAL:
     print('x1 =', x1.solution_value())
     print('x2 =', x2.solution_value())
     print('Максимальне значення цільової функції:', solver.Objective().Value())
-
-    # # Виведення симплекс-таблиць
-    # print('\nСимплекс-таблиці:')
-    # for i in range(solver.NumVariables()):
-    #     print('x{}:'.format(i + 1), end=' ')
-    #     for j in range(solver.NumConstraints() + 1):
-    #         print(solver.GetTableauCoefficient(j, i), end=' ')
-    #     print()
 else:
     print('Проблема не вирішена')
 
-
-import numpy as np
-import matplotlib.pyplot as plt
 
 # Функція обмеження
 def constraint1(x1):
@@ -64,20 +55,19 @@ plt.plot(x1_vals, x2_2, label="x2 <= 300")
 plt.plot(x1_vals, x2_3, label="x1 + x2 <= 150")
 plt.plot(x1_vals, x2_4, label="4x1 + x2 <= 300")
 
-
 plt.xlim(0, 200)
 plt.ylim(0, 350)
 plt.xlabel("x1")
 plt.ylabel("x2")
 
 plt.fill_between(x1_vals, np.minimum(x2_1, np.minimum(x2_2, np.minimum(x2_3, x2_4))), color="gray", alpha=0.5)
-plt.plot(50, 100, 'bo', label='C (50, 100)')
+plt.plot(50, 100, 'bo', label='Опорне рішення: (x1: 50, x2: 100)')
 plt.legend()
 
 # Відображення оптимальної точки
 opt_x1 = x1.solution_value()
 opt_x2 = x2.solution_value()
-plt.scatter(opt_x1, opt_x2, color="red", marker="o", label="Оптимальна точка")
+plt.scatter(opt_x1, opt_x2, color="red", marker="o", label="Оптимальна точка: (x1: 0, x2: 150)")
 plt.legend()
 plt.grid(True)
 plt.show()
