@@ -8,15 +8,17 @@ table1 = [
 
 # функція яка здійснює пошук елемента в таблиці
 def search_element(table: list, element):
-    row = None      #  індекс рядка знаходження елемента в таблиці
-    column = None   #  індекс стовбчика знаходження елемента в таблиці
+    row_index = None      #  індекс рядка знаходження елемента в таблиці
+    column_index = None   #  індекс стовбчика знаходження елемента в таблиці
 
-    for i in table:
-        if element in i:
-            row = table.index(i)
-            column = i.index(element)
+    for row in table:
+        if element in row:
+            row_index = table.index(row)
+            column_index = row.index(element)
 
-    print(f"елемент: {element} знаходиться у -  рядок: {row}, стовпчик: {column}")
+    print(
+        f"елемент: {element} знаходиться у -  рядок:{row_index}, стовпчик:{column_index}"
+    )
 
 
 search_element(table=table1, element=7)
