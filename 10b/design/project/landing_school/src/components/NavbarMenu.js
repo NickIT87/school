@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
 import { useEffect } from 'react';
@@ -14,20 +14,18 @@ const NavbarMenu = () => {
   return (
     <header>
       <nav>
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo">Аґенція нерухомості</a>
-          <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-          <ul class="right hide-on-med-and-down">
+        <div className="nav-wrapper">
+          <a href="#" className="brand-logo">Аґенція нерухомості</a>
+          <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+          <ul className="right hide-on-med-and-down">
             <li><a href="https://martinschrader.pythonanywhere.com">RentalProject</a></li>
           </ul>
         </div>
       </nav>
 
       {/* Мобильное навигационное меню */}
-      <ul class="sidenav" id="mobile-demo">
-        <li><a href="#about">О нас</a></li>
-        <li><a href="#services">Услуги</a></li>
-        <li><a href="#contact">Контакты</a></li>
+      <ul className="sidenav" id="mobile-demo">
+        <li><a href="https://martinschrader.pythonanywhere.com">RentalProject</a></li>
       </ul>
     </header>
   )
