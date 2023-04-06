@@ -7,6 +7,7 @@ const BlockMain = () => {
   return (
     <main>
         <ReclamBlock />
+        {/* next component */}
     </main>
   )
 }

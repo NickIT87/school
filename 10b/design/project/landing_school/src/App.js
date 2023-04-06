@@ -8,7 +8,6 @@ function App() {
     <div className="App">
       <NavbarMenu />
       <BlockMain />
-      <img src={require('./logo.svg')}/>
     </div>
   );
 }
