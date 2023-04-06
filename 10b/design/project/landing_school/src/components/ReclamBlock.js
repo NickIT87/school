@@ -2,9 +2,16 @@ import React from 'react'
 import M from 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
 import bg from './bg.png';
+import { useEffect } from 'react';
 
 
 const ReclamBlock = () => {
+
+  useEffect( () => {
+    const parallax = document.querySelector('.parallax');
+    M.Parallax.init(parallax);
+  }, []);
+
   return (
     <div className="parallax-container">
         <div className="parallax">
