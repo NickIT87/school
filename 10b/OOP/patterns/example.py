@@ -1,0 +1,1 @@
+# generate the pattern abstract factory
