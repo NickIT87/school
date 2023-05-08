@@ -35,17 +35,13 @@ class KSchemes(KS_Methods):
         return responce
 
     def mltpx(self, p1, p2, p3, p4, x0, x1) -> str:
+        args = [p1, p2, p3, p4]
         data_dc = self.decoder(x0, x1)
-        #1
-        b1 = self.con(p1, data_dc[0])
-        #2
-        b2 = self.con(p2, data_dc[1])
-        #3
-        b3 = self.con(p3, data_dc[2])
-        #4
-        b4 = self.con(p4, data_dc[3])
-        #5 
-        return b1 or b2 or b3 or b4
+        y = []
+        for i in range(4):
+            y.append(self.con(args[i], data_dc[i]))
+        print(y) 
+        return int(any(y))
 
     def multiplexor_formula(p1, p2, p3, p4, x0, x1):
         y = not x0 and not x1 and p1 or not x0 and not x1 and p2 or not x0 and not x1 and p3 or not x0 and not x1 and p4
@@ -65,3 +61,7 @@ solver = KSchemes()
 # print(solver.encoder(1, 0, 0, 0))
 
 print(solver.mltpx(1, 0, 0, 0, 0, 0))
+print(solver.mltpx(0, 1, 0, 0, 0, 1))
+print(solver.mltpx(0, 0, 1, 0, 1, 0))
+print(solver.mltpx(0, 0, 0, 1, 1, 1))
+print(solver.mltpx(0, 0, 0, 1, 0, 1))
