@@ -1,11 +1,16 @@
+import os
 import smtplib
 from email.mime.text import MIMEText
 
+
+GLOBAL_PATH = os.path.abspath(__file__).replace(os.path.basename(__file__), '')
 # Параметри для підключення до SMTP-сервера
 smtp_server = 'smtp.gmail.com'
 port = 587  # Порт для TLS (Transport Layer Security) шифрування
 username = 'elanir358@gmail.com'
-password = 'avtocvet1251'
+
+with open(GLOBAL_PATH + 'password.txt', 'r') as ftoken:
+    password = ftoken.read()
 
 # Ваша та отримувачева електронні адреси
 from_addr = 'elanir358@gmail.com'
