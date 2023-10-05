@@ -1,6 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 import sqlite3
+import logging
+
+
+# Configure the logging module
+logging.basicConfig(filename='my_log.log', level=logging.INFO, format='%(asctime)s - %(levelname)s: %(message)s')
 
 # Create a connection to the database (or create one if it doesn't exist)
 conn = sqlite3.connect('example.db')
@@ -25,17 +30,20 @@ def add_record():
     conn.commit()
     entry.delete(0, tk.END)
     messagebox.showinfo('Success', 'Record added successfully')
+    logging.info(f'Added record {name}')
 
 # Function to delete a record by ID
 def delete_record():
     try:
-        record_id = int(entry.get())
+        record_id = int(entry_id.get())
         c.execute('DELETE FROM records WHERE id = ?', (record_id,))
         conn.commit()
         entry.delete(0, tk.END)
         messagebox.showinfo('Success', 'Record deleted successfully')
+        logging.info(f'record id: {record_id} deleted')
     except ValueError:
         messagebox.showerror('Error', 'Please enter a valid ID')
+        logging.error('invalid id entered for deletion')
 
 # Function to edit a record by ID
 def edit_record():
@@ -45,8 +53,10 @@ def edit_record():
         c.execute('UPDATE records SET name = ? WHERE id = ?', (name, record_id))
         conn.commit()
         messagebox.showinfo('Success', 'Record updated successfully')
+        logging.info(f'record id: {record_id}, name: {name} edited successfully')
     except ValueError:
         messagebox.showerror('Error', 'Please enter a valid ID')
+        logging.error('invalid id entered for editing')
 
 # Create main window
 root = tk.Tk()
@@ -80,4 +90,5 @@ edit_button.pack(padx=10, pady=10, side=tk.LEFT)
 root.mainloop()
 
 # Close the connection when done
+c.close()
 conn.close()
