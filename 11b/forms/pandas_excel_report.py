@@ -3,8 +3,8 @@ import pandas as pd
 def generate_excel(filename):
     df = pd.DataFrame(
         {
-            'Имя': ['Алиса', 'Боб', 'Чарли'],
-            'Возраст': [25, 30, 35]
+            'name': ['Alice', 'Bob', 'Charly'],
+            'Age': [25, 30, 35]
         }
     )
     writer = pd.ExcelWriter(filename, engine='xlsxwriter')
