@@ -54,3 +54,38 @@ def binary_to_decimal(binary_string):
 binary_string = float_to_binary(A)
 decimal_result = binary_to_decimal(binary_string)
 print(binary_string, decimal_result)
+
+
+import struct
+
+def float_to_binary(float_number):
+    # Pack the float as bytes
+    packed_bytes = struct.pack('!d', float_number)  # 'd' for double precision
+    # Unpack the bytes as integers
+    integers = struct.unpack('!Q', packed_bytes)
+    # Convert the integer to binary
+    binary_representation = bin(integers[0])
+    return binary_representation
+
+# Example usage
+float_number = 235.125
+binary_representation = float_to_binary(float_number)
+print(f"Original float: {float_number}")
+print(f"Binary representation: {binary_representation}")
+
+
+def binary_to_float(binary_representation):
+    # Convert binary string to integer
+    integer_value = int(binary_representation, 2)
+    # Pack the integer as bytes
+    packed_bytes = struct.pack('!Q', integer_value)  # 'Q' for unsigned long long (64 bits)
+    # Unpack the bytes as a double-precision floating-point number
+    float_value = struct.unpack('!d', packed_bytes)[0]
+    return float_value
+
+# Example usage
+float_result = binary_to_float(binary_representation)
+print(f"Binary representation: {binary_representation}")
+print(f"Converted float: {float_result}")
+print('Hex representation: ', float.hex(A))
+print('Hex representation: ', float.fromhex(float.hex(A)))
