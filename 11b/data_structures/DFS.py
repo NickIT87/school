@@ -5,20 +5,20 @@ def dfs(graph, current_vertex, visited):
         for neighbor in graph[current_vertex]:
             dfs(graph, neighbor, visited)
 
-# # Приклад графа у вигляді словника зі списками сусідів
-# graph = {
-#     'A': ['B', 'C'],
-#     'B': ['D', 'E'],
-#     'C': ['F'],
-#     'D': [],
-#     'E': ['F'],
-#     'F': []
-# }
+# Приклад графа у вигляді словника зі списками сусідів
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
 
-# # Виклик рекурсивної функції для початку пошуку з вершини 'A'
-# visited_vertices = []
-# dfs(graph, 'A', visited_vertices)
-
+# Виклик рекурсивної функції для початку пошуку з вершини 'A'
+visited_vertices = []
+dfs(graph, 'A', visited_vertices)
+print(visited_vertices)
 
 # graph = [ [4, 5], [5], [3,4], [2,4], [0,2,3], [0,1] ]
 # stan = [False for i in range(len(graph))]
@@ -38,19 +38,19 @@ def dfs(graph, current_vertex, visited):
 # print(stan)
 
 
-import networkx as nx
+# import networkx as nx
 
-# Створення графа
-G = nx.Graph()
-G.add_edges_from([(1, 2), (1, 3), (2, 4), (2, 5), (3, 6)])
+# # Створення графа
+# G = nx.Graph()
+# G.add_edges_from([(1, 2), (1, 3), (2, 4), (2, 5), (3, 6)])
 
-# Використання DFS
-edges = list(nx.dfs_edges(G, source=1))
-# Використання DFS для отримання послідовності вершин
-dfs_nodes = list(nx.dfs_preorder_nodes(G, source=1))
+# # Використання DFS
+# edges = list(nx.dfs_edges(G, source=1))
+# # Використання DFS для отримання послідовності вершин
+# dfs_nodes = list(nx.dfs_preorder_nodes(G, source=1))
 
-# Виведення результатів
-print("DFS Nodes:", dfs_nodes)
-# Виведення результатів
-print("DFS Edges:", edges)
+# # Виведення результатів
+# print("DFS Nodes:", dfs_nodes)
+# # Виведення результатів
+# print("DFS Edges:", edges)
 
