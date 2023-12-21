@@ -3,10 +3,8 @@ from collections import deque
 def bfs(graph, start_vertex):
     visited = []
     queue = deque([start_vertex])
-
     while queue:
         current_vertex = queue.popleft()
-
         if current_vertex not in visited:
             print(current_vertex)
             visited.append(current_vertex)
@@ -26,27 +24,41 @@ graph = {
 # Call BFS starting from vertex 'A'
 bfs(graph, 'A')
 
-# # Виклик рекурсивної функції для початку пошуку з вершини 'A'
-# visited_vertices = []
-# dfs(graph, 'A', visited_vertices)
+# пошук в ширину (підручник)
+# Поиск в ширину
+
+graph = [
+    [1, 3],         # 0
+    [0, 3, 4, 5],   # 1
+    [4, 5],         # 2
+    [0, 1, 5],      # 3
+    [1, 2],         # 4
+    [1, 2, 3]       # 5
+]
+
+start = [-1]*len(graph)
+print('Початковий стан: ', start)
+
+def func(s):
+    global start
+    start[s] = 0
+    queue = [s]
+    print('Динаміка зміну стану вершини')
+    while queue:
+        print(start)
+        v = queue.pop(0)
+        for m in graph[v]:
+            if start[m] == -1:
+                queue.append(m)
+                start[m] = start[v] + 1
 
 
-# graph = [ [4, 5], [5], [3,4], [2,4], [0,2,3], [0,1] ]
-# stan = [False for i in range(len(graph))]
-# print(stan)
-# print('Порядок обходу вершин')
-# def func(v):
-#     print(v)
-#     stan[v] = True
-#     for vertex in graph[v]:
-#         if not stan[vertex]:
-#             func(vertex)
+for i in range(len(graph)):
+    if start[i] == -1:
+        func(i)
+    print('Вершина ', i, ', номер обходу ', start[i])
 
-# for c in range(len(graph)):
-#     if not stan[c]:
-#         func(c)
 
-# print(stan)
 
 
 # import networkx as nx
