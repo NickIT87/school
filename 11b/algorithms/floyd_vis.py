@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import networkx as nx
 
 graph = np.array([
-    [0, 3, float('inf'), 7],
-    [8, 0, 2, float('inf')],
+    [0, 3, float('inf'), float('inf')],
+    [float('inf'), 0, 2, float('inf')],
     [5, float('inf'), 0, 1],
     [2, float('inf'), float('inf'), 0]
 ])

@@ -104,8 +104,8 @@ def visualize(graph, shortest_paths):
 if __name__ == "__main__":
     # Приклад графу, де float('inf') представляє нескінченність
     graph = np.array([
-        [0, 3, float('inf'), 7],
-        [8, 0, 2, float('inf')],
+        [0, 3, float('inf'), float('inf')],
+        [float('inf'), 0, 2, float('inf')],
         [5, float('inf'), 0, 1],
         [2, float('inf'), float('inf'), 0]
     ])
