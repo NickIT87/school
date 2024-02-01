@@ -4,10 +4,6 @@ from shapely.geometry import LineString
 import numpy as np
 
 # зазначимо вектори
-# a_vector = [1, 4]
-# b_vector = [4, 1]
-
-# зазначимо вектори
 a_vector = np.array([1, 4])
 b_vector = np.array([4, 1])
 
@@ -20,16 +16,15 @@ print("Magnitude of B vector:", magnitude_b)
 
 # визначимо вектор, що лежить в площині, де лежать a та b
 c_vector = np.cross(a_vector, b_vector)
-
 # обчислення скалярного потрійного добутку
 scalar_triple_product = np.dot(a_vector, c_vector)
 print(scalar_triple_product)
-
 # перевірка на компланарність
 if np.allclose(scalar_triple_product, 0):
     print("Vectors are coplanar.")
 else:
     print("Vectors are not coplanar.")
+
 
 # об'єкти ліній
 l1 = LineString([[0, a_vector[0]], [1, a_vector[1]]])
