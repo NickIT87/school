@@ -1,0 +1,11 @@
+{
+    "packages": [
+        "arrr",
+        "matplotlib"
+    ],
+
+    "plugins": [
+        "https://pyscript.net/latest/plugins/python/py_tutor.py"
+    ]
+}
+
