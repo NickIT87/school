@@ -1,7 +1,6 @@
 {
     "packages": [
-        "arrr",
-        "matplotlib"
+        "arrr"
     ],
 
     "plugins": [
