@@ -50,67 +50,81 @@
       </nav>
     </header>
 
-
     <div class="container" id="mycontainer">
         <h1>Visit page</h1>
-
-        <h3 id="name">Arthur`s Macharty</h3>
-
-        <h5>75 avenus`s street ...</h5>
-
-        <h5>75 avenus`s street ...</h5>
-        <h5>75 avenus`s street ...</h5>
-        <h5>75 avenus`s street ...</h5>
-
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+        <h3 id="name">Arthur`s Machartys</h3>
+        <hr>
+        <h5>position: Developer</h5>
+        <h5>First name</h5>
+        <h5>Second name</h5>
+        <h5>phone number: +3809966677788</h5>
+        <h5>Address: 75 avenus`s street ...</h5>
+        <hr>
+        <h6>About: </h6>
+        <div class="mycontent">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
             Impedit necessitatibus iste, a enim assumenda quam culpa, vel 
             suscipit quo dolores sapiente. Praesentium magnam ipsum molestiae 
-            sequi repellat veniam placeat incidunt.</p>
+            sequi repellat veniam placeat incidunt.
+          </p>
+        </div>
+        
+        <div id="dynamic_content">
+        </div>
 
-        <div id="dynamic_content"></div>
-
-        <div class="container text-center">
+        <div id="portfolio_container" class="container text-center" name="port">
             <div class="row">
-                <div class="col">
+                <div class="col col1">
                     <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
+                        <img src="images/bird.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
+                          <h5 class="card-title">Portfolio</h5>
                           <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                           <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
+                
+                <div class="col col2">
+                  <div class="card" style="width: 18rem;">
+                      <img src="images/bird.jpg" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Portfolio</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                      </div>
+                  </div>
                 </div>
-                <div class="col">
-                    <div class="card" style="width: 18rem;">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
+
+                <div class="col col3">
+                  <div class="card" style="width: 18rem;">
+                      <img src="images/bird.jpg" class="card-img-top" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Portfolio</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                      </div>
+                  </div>
                 </div>
+                
+              </div>
             </div>
         </div>
-    
-    
-        <button class="btn btn-info" id="mybtn">click me</button>
     </div>
     
 
+<button class="btn btn-info" id="mybtn">click me</button>
+<!-- <img id="myimage" src="images/bird.jpg" alt="bird" /> -->
+<div id="animatedDiv"></div>
+<p id="animatedParagraph">
+  This is a paragraph with a show/hide animation.
+</p>
 
-    <footer>
+
+<canvas id="paintCanvas" width="600" height="500"></canvas>
+
+<footer class="footer">
         <div class="card text-center">
             <div class="card-header">
               Featured
@@ -124,20 +138,10 @@
               2 days ago
             </div>
           </div>
-    </footer>
+</footer>
 
-<script>
-
-$(document).ready(function(){
-    console.log("test script")
-    $("#name").css("color", "red");
-    $("#name").css("text-align", "center");
-    $("#dynamic_content").html("<div><h5>test</h5></div>")
-    $("#mybtn").on("click", function() {
-        alert("btn pressed");
-    })
-})
-
-</script>
+<link href="./style.css" rel="stylesheet" >
+<script src="main.js"></script>
+<script src="canvas.js"></script>
 </body>
 </html>

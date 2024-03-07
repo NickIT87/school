@@ -1,0 +1,41 @@
+h3 {
+    color: blue;
+}
+
+.mycontent p {
+    text-align: center;
+}
+
+#portfolio_container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    margin-top: 20px;
+}
+
+.card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+/* 
+.col1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+} */
+
+#animatedDiv {
+    width: 100px;
+    height: 100px;
+    background-color: #3498db;
+    position: relative;
+}
+
+#animatedParagraph {
+    display: none;
+}
+
+canvas {
+    border: 1px solid #000;
+}
