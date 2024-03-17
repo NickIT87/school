@@ -1,0 +1,13 @@
+graph MyGraph {
+      // Add graph attributes here (optional)
+
+      // Add nodes
+      A
+      B
+      C
+
+      // Add edges
+      A -- B
+      B -- C
+      C -- A
+    }
