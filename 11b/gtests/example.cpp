@@ -1,3 +1,6 @@
+/*
+g++ -std=c++14 -I/opt/homebrew/Cellar/googletest/1.14.0/include -L/opt/homebrew/Cellar/googletest/1.14.0/lib -lgtest -lgtest_main -pthread example.cpp -o example_test
+*/
 #include <gtest/gtest.h>
 
 // Example function to test
