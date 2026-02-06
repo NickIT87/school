@@ -56,7 +56,18 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 6. Демонстрация работы макросов
+;; 6. Измерение времени работы
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defmacro timeit [expr]
+  `(let [start (time)
+         result ~expr
+         end (time)]
+     (print "Time of execution:" (- end start) "seconds")
+     result))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 7. Демонстрация работы макросов
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (print "\n=== 1. say-hello ===")
@@ -73,5 +84,22 @@
 
 (print "\n=== 5. unless ===")
 (unless (= 2 3) (print "2 is not 3"))
+
+(print "\n=== 6. timeit ===")
+(setv result (timeit
+              (do
+                (setv total 0)
+                (for [i (range 100000)]
+                  (setv total (+ total i)))
+                total)))
+
+(print "Result:" result)
+
+(defn factorial [n]
+  (if (<= n 1)
+    1
+    (* n (factorial (- n 1)))))
+
+(print (timeit (factorial 6)))
 
 (print "\nAll macros executed successfully.")
