@@ -4,5 +4,6 @@
     "editor.fontLigatures": false,
     "terminal.integrated.fontSize": 20,
     "debug.console.fontSize": 18,
-    "editor.tabSize": 4
+    "editor.tabSize": 4,
+    "python-envs.defaultEnvManager": "ms-python.python:pyenv"
 }
